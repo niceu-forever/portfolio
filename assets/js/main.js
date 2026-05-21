@@ -2,22 +2,6 @@
    PORTFOLIO — MAIN JS
    ========================================= */
 
-// ---- CUSTOM PIXEL CURSOR ----
-// Applied via CSS url() on body — no JS needed
-// The .cursor div is kept for potential future effects
-
-
-// ---- GLITCH PAGE TRANSITION ----
-const glitchOverlay = document.getElementById('glitch-overlay');
-
-function triggerGlitch(cb) {
-  if (!glitchOverlay) { cb(); return; }
-  glitchOverlay.classList.add('flash');
-  setTimeout(cb, 120);
-  setTimeout(() => glitchOverlay.classList.remove('flash'), 400);
-}
-
-
 // ---- PAGE ROUTING ----
 const pages    = document.querySelectorAll('.page');
 const navLinks = document.querySelectorAll('[data-page]');
@@ -27,14 +11,10 @@ function showPage(id) {
     pages.forEach(p => p.classList.remove('active'));
     const target = document.getElementById(`page-${id}`);
     if (target) { target.classList.add('active'); window.scrollTo({ top: 0 }); }
-
-    // Update all nav links (taskbar + mobile nav)
     navLinks.forEach(l => {
-      const isActive = l.dataset.page === id;
-      l.classList.toggle('nav-active', isActive);
-      l.classList.toggle('active', isActive);
+      l.classList.toggle('nav-active', l.dataset.page === id);
+      l.classList.toggle('active', l.dataset.page === id);
     });
-
     history.pushState(null, null, `#${id}`);
     if (id === 'home') setTimeout(initHScroll, 80);
   });
@@ -47,20 +27,29 @@ window.addEventListener('popstate', () => showPage(location.hash.replace('#','')
 showPage(location.hash.replace('#','') || 'home');
 
 
+// ---- GLITCH TRANSITION ----
+const glitchOverlay = document.getElementById('glitch-overlay');
+
+function triggerGlitch(cb) {
+  if (!glitchOverlay) { cb(); return; }
+  glitchOverlay.classList.add('flash');
+  setTimeout(cb, 120);
+  setTimeout(() => glitchOverlay.classList.remove('flash'), 400);
+}
+
+
 // ---- TASKBAR CLOCK ----
 function updateClock() {
-  const now  = new Date();
   const time = document.getElementById('taskbar-time');
   const date = document.getElementById('taskbar-date');
   if (!time || !date) return;
-
+  const now  = new Date();
   const h = String(now.getHours()).padStart(2,'0');
   const m = String(now.getMinutes()).padStart(2,'0');
   const s = String(now.getSeconds()).padStart(2,'0');
   time.textContent = `${h}:${m}:${s}`;
-
-  const days  = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
-  const months= ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+  const days   = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
+  const months = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
   date.textContent = `${days[now.getDay()]} ${String(now.getDate()).padStart(2,'0')} ${months[now.getMonth()]}`;
 }
 updateClock();
@@ -179,61 +168,6 @@ window.addEventListener('resize', () => {
 });
 
 
-// ---- LIGHTBOX ----
-const lightbox        = document.getElementById('lightbox');
-const lightboxImg     = document.getElementById('lightbox-img');
-const lightboxPrev    = document.getElementById('lightbox-prev');
-const lightboxNext    = document.getElementById('lightbox-next');
-const lightboxCounter = document.getElementById('lightbox-counter');
-
-let lbImages = [];
-let lbIndex  = 0;
-
-function updateLightbox() {
-  lightboxImg.src = lbImages[lbIndex];
-  if (lightboxCounter) {
-    lightboxCounter.textContent = lbImages.length > 1
-      ? `${lbIndex + 1} / ${lbImages.length}` : '';
-  }
-  if (lightboxPrev) lightboxPrev.classList.toggle('hidden', lbImages.length <= 1);
-  if (lightboxNext) lightboxNext.classList.toggle('hidden', lbImages.length <= 1);
-}
-
-function openLightbox(images, startIndex = 0) {
-  lbImages = Array.isArray(images) ? images : [images];
-  lbIndex  = startIndex;
-  updateLightbox();
-  lightbox.classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
-
-function closeLightbox() {
-  lightbox.classList.remove('open');
-  document.body.style.overflow = '';
-  setTimeout(() => { lightboxImg.src = ''; lbImages = []; }, 300);
-}
-
-lightboxPrev?.addEventListener('click', e => {
-  e.stopPropagation();
-  lbIndex = (lbIndex - 1 + lbImages.length) % lbImages.length;
-  updateLightbox();
-});
-lightboxNext?.addEventListener('click', e => {
-  e.stopPropagation();
-  lbIndex = (lbIndex + 1) % lbImages.length;
-  updateLightbox();
-});
-
-document.getElementById('lightbox-close')?.addEventListener('click', closeLightbox);
-lightbox?.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
-
-document.addEventListener('keydown', e => {
-  if (!lightbox?.classList.contains('open')) return;
-  if (e.key === 'Escape') closeLightbox();
-  if (e.key === 'ArrowLeft')  { lbIndex = (lbIndex - 1 + lbImages.length) % lbImages.length; updateLightbox(); }
-  if (e.key === 'ArrowRight') { lbIndex = (lbIndex + 1) % lbImages.length; updateLightbox(); }
-});
-
 // ---- PROJECT OVERLAY ----
 const projectOverlay = document.getElementById('project-overlay');
 const poImg     = document.getElementById('po-img');
@@ -257,22 +191,19 @@ function updateProjectOverlay() {
 }
 
 function openProject(card) {
-  const raw   = card.dataset.images;
-  poImages    = raw ? JSON.parse(raw) : [card.querySelector('.work-card-image img').src];
-  poIndex     = 0;
-
+  const raw = card.dataset.images;
+  poImages  = raw ? JSON.parse(raw) : [card.querySelector('.work-card-image img').src];
+  poIndex   = 0;
   if (poTitle)   poTitle.textContent   = card.dataset.title    || '';
   if (poEyebrow) poEyebrow.textContent = `${card.dataset.category || ''} — ${card.dataset.year || ''}`;
   if (poDesc)    poDesc.textContent    = card.dataset.desc      || '';
   if (poTools && card.dataset.tools) {
-    poTools.innerHTML = card.dataset.tools.split(',')
-      .map(t => {
-        const tool = t.trim();
-        const isAI = tool.toLowerCase().includes('chatgpt') || tool.toLowerCase().includes('ai');
-        return `<span class="project-overlay-tool${isAI ? ' tool-ai' : ''}">${tool}</span>`;
-      }).join('');
+    poTools.innerHTML = card.dataset.tools.split(',').map(t => {
+      const tool = t.trim();
+      const isAI = tool.toLowerCase().includes('chatgpt');
+      return `<span class="project-overlay-tool${isAI ? ' tool-ai' : ''}">${tool}</span>`;
+    }).join('');
   }
-
   updateProjectOverlay();
   projectOverlay.classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -281,7 +212,7 @@ function openProject(card) {
 function closeProject() {
   projectOverlay.classList.remove('open');
   document.body.style.overflow = '';
-  setTimeout(() => { poImg.src = ''; poImages = []; }, 300);
+  setTimeout(() => { if (poImg) poImg.src = ''; poImages = []; }, 300);
 }
 
 poPrev?.addEventListener('click', e => {
@@ -295,16 +226,21 @@ poNext?.addEventListener('click', e => {
   updateProjectOverlay();
 });
 
-document.getElementById('po-close')?.addEventListener('click', closeProject);
+document.getElementById('po-close')?.addEventListener('click', e => {
+  e.stopPropagation();
+  closeProject();
+});
+
+// Click outside — on the overlay backdrop itself
 projectOverlay?.addEventListener('click', e => {
-  // Close if clicking the dark background (not the content panels)
-  const img = document.querySelector('.project-overlay-img');
-  const info = document.querySelector('.project-overlay-info');
-  if (!img?.contains(e.target) && !info?.contains(e.target)) closeProject();
+  if (e.target === projectOverlay) closeProject();
 });
 
 document.addEventListener('keydown', e => {
-  if (projectOverlay?.classList.contains('open') && e.key === 'Escape') closeProject();
+  if (!projectOverlay?.classList.contains('open')) return;
+  if (e.key === 'Escape') closeProject();
+  if (e.key === 'ArrowLeft')  { poIndex = (poIndex - 1 + poImages.length) % poImages.length; updateProjectOverlay(); }
+  if (e.key === 'ArrowRight') { poIndex = (poIndex + 1) % poImages.length; updateProjectOverlay(); }
 });
 
 document.querySelectorAll('.work-card').forEach(card => {
@@ -312,9 +248,34 @@ document.querySelectorAll('.work-card').forEach(card => {
 });
 
 
+// ---- LIGHTBOX (kept for potential use) ----
+const lightbox        = document.getElementById('lightbox');
+const lightboxImg     = document.getElementById('lightbox-img');
+const lightboxPrev    = document.getElementById('lightbox-prev');
+const lightboxNext    = document.getElementById('lightbox-next');
+const lightboxCounter = document.getElementById('lightbox-counter');
+let lbImages = [], lbIndex = 0;
+
+function updateLightbox() {
+  if (lightboxImg) lightboxImg.src = lbImages[lbIndex];
+  if (lightboxCounter) lightboxCounter.textContent = lbImages.length > 1 ? `${lbIndex+1} / ${lbImages.length}` : '';
+  if (lightboxPrev) lightboxPrev.classList.toggle('hidden', lbImages.length <= 1);
+  if (lightboxNext) lightboxNext.classList.toggle('hidden', lbImages.length <= 1);
+}
+
+function closeLightbox() {
+  lightbox?.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+lightboxPrev?.addEventListener('click', e => { e.stopPropagation(); lbIndex = (lbIndex-1+lbImages.length)%lbImages.length; updateLightbox(); });
+lightboxNext?.addEventListener('click', e => { e.stopPropagation(); lbIndex = (lbIndex+1)%lbImages.length; updateLightbox(); });
+document.getElementById('lightbox-close')?.addEventListener('click', closeLightbox);
+lightbox?.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+
+
 // ---- EASTER EGG ----
 document.getElementById('easter-trigger')?.addEventListener('click', () => showPage('easter'));
-
 let seq = [];
 const konami = [38,38,40,40,37,39,37,39,66,65];
 document.addEventListener('keydown', e => {

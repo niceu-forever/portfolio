@@ -106,7 +106,8 @@ img { display: block; max-width: 100%; }
 
 .taskbar-icon {
   font-size: 1.4rem; line-height: 1;
-  filter: grayscale(0.3);
+  filter: none;
+  color: white;
 }
 
 .taskbar-label {
@@ -642,12 +643,12 @@ img { display: block; max-width: 100%; }
   min-height: 0;
 }
 .work-card-image img {
-  width: 100%; height: 100%; object-fit: cover;
-  object-position: center top;
+  width: 100%; height: 100%; object-fit: contain;
+  background: rgba(10,10,10,0.03);
   transition: transform 0.55s ease;
   display: block;
 }
-.work-card:hover .work-card-image img { transform: scale(1.03); }
+.work-card:hover .work-card-image img { transform: scale(1.02); }
 
 .work-card-image::after {
   content: ''; position: absolute; inset: 0;
@@ -1009,8 +1010,7 @@ img { display: block; max-width: 100%; }
 /* =========================================
    CUSTOM PIXEL CURSOR
    ========================================= */
-body { cursor: url("images/cursor.svg") 0 0, auto; }
-a, button, [data-page], .work-card, .taskbar-item { cursor: url("images/cursor.svg") 0 0, auto; }
+
 
 .cursor {
   position: fixed; top: 0; left: 0;
@@ -1087,7 +1087,7 @@ a, button, [data-page], .work-card, .taskbar-item { cursor: url("images/cursor.s
   color: var(--cream); font-size: 1rem;
   width: 40px; height: 40px;
   display: flex; align-items: center; justify-content: center;
-  cursor: none; transition: background 0.2s, border-color 0.2s;
+  cursor: pointer; transition: background 0.2s, border-color 0.2s;
 }
 .project-overlay-prev { left: 1rem; }
 .project-overlay-next { right: 1rem; }
@@ -1112,7 +1112,7 @@ a, button, [data-page], .work-card, .taskbar-item { cursor: url("images/cursor.s
   font-family: var(--font-mono); font-size: 0.55rem;
   letter-spacing: 0.2em; text-transform: uppercase;
   color: rgba(232,232,232,0.4); background: none; border: none;
-  cursor: none; transition: color 0.2s; text-align: left; padding: 0;
+  cursor: pointer; transition: color 0.2s; text-align: left; padding: 0;
   margin-bottom: 3rem;
 }
 .project-overlay-close:hover { color: var(--cream); }
@@ -1171,9 +1171,7 @@ a, button, [data-page], .work-card, .taskbar-item { cursor: url("images/cursor.s
   .contact-page { padding-top: 5rem; }
   .easter-page  { padding-top: 5rem; }
 
-  /* No custom cursor on touch */
-  *, *::before, *::after { cursor: auto !important; }
-  .cursor { display: none; }
+
 }
 
 /* ChatGPT Image tool badge — subtle distinction */
