@@ -3,13 +3,8 @@
    ========================================= */
 
 // ---- CUSTOM PIXEL CURSOR ----
-const cursor = document.getElementById('cursor');
-if (cursor && window.innerWidth > 768) {
-  document.addEventListener('mousemove', e => {
-    cursor.style.left = e.clientX + 'px';
-    cursor.style.top  = e.clientY + 'px';
-  });
-}
+// Applied via CSS url() on body — no JS needed
+// The .cursor div is kept for potential future effects
 
 
 // ---- GLITCH PAGE TRANSITION ----
@@ -239,16 +234,70 @@ document.addEventListener('keydown', e => {
   if (e.key === 'ArrowRight') { lbIndex = (lbIndex + 1) % lbImages.length; updateLightbox(); }
 });
 
+// ---- PROJECT OVERLAY ----
+const projectOverlay = document.getElementById('project-overlay');
+const poImg     = document.getElementById('po-img');
+const poTitle   = document.getElementById('po-title');
+const poEyebrow = document.getElementById('po-eyebrow');
+const poDesc    = document.getElementById('po-desc');
+const poTools   = document.getElementById('po-tools');
+const poCounter = document.getElementById('po-counter');
+const poPrev    = document.getElementById('po-prev');
+const poNext    = document.getElementById('po-next');
+
+let poImages = [];
+let poIndex  = 0;
+
+function updateProjectOverlay() {
+  poImg.src = poImages[poIndex];
+  if (poCounter) poCounter.textContent = poImages.length > 1
+    ? `${poIndex + 1} / ${poImages.length}` : '';
+  if (poPrev) poPrev.classList.toggle('hidden', poImages.length <= 1);
+  if (poNext) poNext.classList.toggle('hidden', poImages.length <= 1);
+}
+
+function openProject(card) {
+  const raw   = card.dataset.images;
+  poImages    = raw ? JSON.parse(raw) : [card.querySelector('.work-card-image img').src];
+  poIndex     = 0;
+
+  if (poTitle)   poTitle.textContent   = card.dataset.title    || '';
+  if (poEyebrow) poEyebrow.textContent = `${card.dataset.category || ''} — ${card.dataset.year || ''}`;
+  if (poDesc)    poDesc.textContent    = card.dataset.desc      || '';
+  if (poTools && card.dataset.tools) {
+    poTools.innerHTML = card.dataset.tools.split(',')
+      .map(t => `<span class="project-overlay-tool">${t.trim()}</span>`).join('');
+  }
+
+  updateProjectOverlay();
+  projectOverlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeProject() {
+  projectOverlay.classList.remove('open');
+  document.body.style.overflow = '';
+  setTimeout(() => { poImg.src = ''; poImages = []; }, 300);
+}
+
+poPrev?.addEventListener('click', e => {
+  e.stopPropagation();
+  poIndex = (poIndex - 1 + poImages.length) % poImages.length;
+  updateProjectOverlay();
+});
+poNext?.addEventListener('click', e => {
+  e.stopPropagation();
+  poIndex = (poIndex + 1) % poImages.length;
+  updateProjectOverlay();
+});
+
+document.getElementById('po-close')?.addEventListener('click', closeProject);
+projectOverlay?.addEventListener('click', e => {
+  if (e.target === projectOverlay) closeProject();
+});
+
 document.querySelectorAll('.work-card').forEach(card => {
-  card.addEventListener('click', () => {
-    const raw = card.dataset.images;
-    if (raw) {
-      try { openLightbox(JSON.parse(raw), 0); } catch(e) {}
-    } else {
-      const img = card.querySelector('.work-card-image img');
-      if (img) openLightbox([img.src], 0);
-    }
-  });
+  card.addEventListener('click', () => openProject(card));
 });
 
 

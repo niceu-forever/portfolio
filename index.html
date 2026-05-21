@@ -318,7 +318,13 @@
           </div>
         </div>
 
-        <div class="work-card">
+        <div class="work-card"
+          data-images='["images/natureposter.jpg"]'
+          data-title="Nature Poster"
+          data-category="Print"
+          data-year="2026"
+          data-desc="A cinematic poster design capturing the atmosphere of the Norwegian landscape."
+          data-tools="Photoshop,Illustrator">
           <div class="work-card-image">
             <img src="images/natureposter.jpg" alt="Nature poster" loading="lazy" />
             <div class="work-card-hover-label"><span>VIEW PROJECT</span></div>
@@ -329,7 +335,13 @@
           </div>
         </div>
 
-        <div class="work-card">
+        <div class="work-card"
+          data-images='["images/ravn.png"]'
+          data-title="RAVN Esport"
+          data-category="Web Design"
+          data-year="2026"
+          data-desc="Website design for RAVN Esport — dark, atmospheric, and built around the brand's gothic fog aesthetic."
+          data-tools="Webflow,Photoshop,Illustrator">
           <div class="work-card-image">
             <img src="images/ravn.png" alt="RAVN Esport web design" loading="lazy" />
             <div class="work-card-hover-label"><span>VIEW PROJECT</span></div>
@@ -340,7 +352,13 @@
           </div>
         </div>
 
-        <div class="work-card">
+        <div class="work-card"
+          data-images='["images/porsche.png"]'
+          data-title="Porsche Poster"
+          data-category="Print"
+          data-year="2026"
+          data-desc="Automotive poster design for Porsche — bold typography and dramatic lighting."
+          data-tools="Photoshop,Illustrator">
           <div class="work-card-image">
             <img src="images/porsche.png" alt="Porsche poster" loading="lazy" />
             <div class="work-card-hover-label"><span>VIEW PROJECT</span></div>
@@ -458,6 +476,25 @@
     </main>
   </div>
 
+
+  <!-- PROJECT OVERLAY -->
+  <div class="project-overlay" id="project-overlay">
+    <div class="project-overlay-img">
+      <button class="project-overlay-prev" id="po-prev">←</button>
+      <img id="po-img" src="" alt="" />
+      <button class="project-overlay-next" id="po-next">→</button>
+    </div>
+    <div class="project-overlay-info">
+      <button class="project-overlay-close" id="po-close">✕ close</button>
+      <div>
+        <div class="project-overlay-eyebrow" id="po-eyebrow"></div>
+        <div class="project-overlay-title" id="po-title"></div>
+        <div class="project-overlay-desc" id="po-desc"></div>
+        <div class="project-overlay-tools" id="po-tools"></div>
+      </div>
+      <div class="project-overlay-counter" id="po-counter"></div>
+    </div>
+  </div>
 
   <!-- LIGHTBOX -->
   <div class="lightbox" id="lightbox">
