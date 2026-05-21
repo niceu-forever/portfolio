@@ -154,8 +154,7 @@ img { display: block; max-width: 100%; }
 .hero-title .script-word {
   font-family: var(--font-script);
   font-size: clamp(4.5rem, 8.5vw, 7.5rem);
-  -webkit-text-stroke: 1.5px var(--pink);
-  color: transparent;
+  color: var(--pink);
   display: block;
   line-height: 0.7;
   margin-top: -0.1em;
@@ -458,7 +457,7 @@ img { display: block; max-width: 100%; }
 .page-header h1 .script-word {
   font-family: var(--font-script);
   font-size: clamp(3.5rem, 8vw, 7rem);
-  -webkit-text-stroke: 1.5px var(--pink); color: transparent;
+  color: var(--pink);
   display: block; line-height: 1.05;
 }
 .page-header-meta {
@@ -647,7 +646,7 @@ img { display: block; max-width: 100%; }
 .easter-content h1 .script-word {
   font-family: var(--font-script);
   font-size: clamp(2.8rem, 6.5vw, 4.5rem);
-  -webkit-text-stroke: 1.5px var(--pink); color: transparent;
+  color: var(--pink);
   display: inline; line-height: 1.1;
 }
 .easter-content p {
