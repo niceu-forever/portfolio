@@ -5,196 +5,223 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Markus Håland — Graphic Designer</title>
   <meta name="description" content="Graphic designer based in Molde, Norway. Branding, motion, web, print." />
-  <link rel="stylesheet" href="assets/css/style.css" />
-  <!-- Preconnect to Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="assets/css/style.css" />
 </head>
 <body>
 
-  <!-- ========== NAVIGATION ========== -->
+  <!-- ========== NAV ========== -->
   <nav class="nav">
     <div class="nav-logo">
-      Markus Håland
-      <span>Portfolio ✦ Molde, NO</span>
+      MARKUS HÅLAND
+      <span class="nav-logo-tag">MH-2025</span>
     </div>
     <ul class="nav-links">
-      <li><a href="#home" data-page="home">Home</a></li>
-      <li><a href="#about" data-page="about">About</a></li>
-      <li><a href="#work" data-page="work">Work</a></li>
+      <li><a href="#home"    data-page="home">Home</a></li>
+      <li><a href="#about"   data-page="about">About</a></li>
+      <li><a href="#work"    data-page="work">Work</a></li>
       <li><a href="#contact" data-page="contact">Contact</a></li>
     </ul>
   </nav>
 
-  <!-- ========== HIDDEN EASTER EGG TRIGGER ========== -->
-  <!-- It's that tiny dot in the bottom right corner. Sneaky. -->
-  <button class="nav-easter-trigger" id="easter-trigger" aria-label="..."></button>
+  <!-- Hidden easter egg dot — bottom right -->
+  <button class="easter-trigger" id="easter-trigger" aria-label="..."></button>
 
 
   <!-- ================================================================
-       HOME PAGE
+       HOME
   ================================================================ -->
   <div class="page active" id="page-home">
 
-    <!-- HERO -->
     <section class="hero">
-      <div class="hero-inner">
-        <p class="hero-eyebrow">Graphic Designer ✦ Molde, Norway</p>
-        <div class="hero-rule"></div>
-        <h1 class="hero-title">
-          Making<br /><em>Things</em><br />Look Good
-        </h1>
-        <p class="hero-subtitle">Branding, motion, web & print that actually means something.</p>
 
-        <!-- Hero image — swap src for your own photo -->
-        <div class="hero-image-frame">
+      <!-- Utility bar like the "See You Again" poster -->
+      <div class="hero-utility-bar">
+        <span>Graphic Designer ✦ Molde, Norway</span>
+        <span>Branding / Motion / Web / Print</span>
+        <span>© 2025 — All rights reserved</span>
+        <span>Est. 2024 ✦ Tingh Kommunikasjon</span>
+      </div>
+
+      <div class="hero-body">
+
+        <!-- Left: Text -->
+        <div class="hero-left">
+          <div>
+            <p class="hero-eyebrow">Portfolio ✦ Vol. I</p>
+            <h1 class="hero-title">
+              <span class="line-fill">MAKING</span>
+              <span class="line-color">THINGS</span>
+              <span class="line-fill">LOOK</span>
+              <span class="line-fill">GOOD.</span>
+            </h1>
+            <p class="hero-desc">
+              Branding, motion, web and print design that doesn't look like it came out of a template.
+              Based in Molde. Working at Tingh kommunikasjon.
+            </p>
+          </div>
+
+          <div>
+            <div class="hero-bottom-tags">
+              <span class="tag tag-pink">Branding</span>
+              <span class="tag tag-blue">Web</span>
+              <span class="tag tag-orange">Motion</span>
+              <span class="tag tag-green">Print</span>
+              <span class="tag tag-purple">Social</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Hero image -->
+        <div class="hero-right">
+          <!-- Swap this src for your own photo or a strong project image -->
           <img
-            src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=900&q=80"
-            alt="Hero image"
+            src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&q=80"
+            alt="Hero"
             loading="eager"
           />
+          <div class="hero-img-label">PORTFOLIO</div>
+          <div class="hero-img-counter">
+            REC ● 00:00<br />
+            NO SIGNAL<br />
+            T-XX VHS
+          </div>
         </div>
+
       </div>
-      <div class="scroll-hint">Scroll</div>
+
+      <div class="scroll-hint">↓ scroll</div>
     </section>
 
-    <!-- TICKER TAPE -->
+    <!-- VHS stripe -->
+    <div class="stripe-bar">
+      <span></span><span></span><span></span><span></span><span></span><span></span>
+    </div>
+
+    <!-- TICKER -->
     <div class="ticker" aria-hidden="true">
-      <div class="ticker-inner">
-        <span class="ticker-item">Graphic Design</span>
-        <span class="ticker-item">Branding</span>
-        <span class="ticker-item">Motion</span>
-        <span class="ticker-item">Web Design</span>
-        <span class="ticker-item">Print</span>
-        <span class="ticker-item">After Effects</span>
-        <span class="ticker-item">Illustrator</span>
-        <span class="ticker-item">Photoshop</span>
-        <span class="ticker-item">Molde, Norway</span>
-        <span class="ticker-item">Est. 2024</span>
+      <div class="ticker-track">
+        <span>GRAPHIC DESIGN</span><span class="dot">✦</span>
+        <span>BRANDING</span><span class="dot">✦</span>
+        <span>AFTER EFFECTS</span><span class="dot">✦</span>
+        <span>MOTION DESIGN</span><span class="dot">✦</span>
+        <span>WEB DESIGN</span><span class="dot">✦</span>
+        <span>PRINT</span><span class="dot">✦</span>
+        <span>ILLUSTRATOR</span><span class="dot">✦</span>
+        <span>PHOTOSHOP</span><span class="dot">✦</span>
+        <span>MOLDE, NORWAY</span><span class="dot">✦</span>
+        <span>PREMIERE PRO</span><span class="dot">✦</span>
+        <span>SQUARESPACE</span><span class="dot">✦</span>
+        <span>WEBFLOW</span><span class="dot">✦</span>
       </div>
     </div>
 
     <!-- ================================================================
          HORIZONTAL SCROLLER
          ---------------------------------------------------------------
-         TO ADD NEW IMAGES:
-         Copy one .hscroll-item block below, paste it inside
-         #hscroll-track, and update the img src and caption text.
-         Done. No JS changes needed.
+         TO ADD IMAGES:
+         Find the div id="hscroll-track" below.
+         Copy one .hscroll-item block, paste it inside,
+         change the img src and the caption text.
+         No JS changes needed — it adapts automatically.
     ================================================================ -->
     <section class="hscroll-section">
       <div class="hscroll-sticky">
-        <p class="hscroll-label">Selected Works ✦ Scroll to explore</p>
+
+        <div class="hscroll-header">
+          <div class="hscroll-title">SELECTED WORK</div>
+          <div class="hscroll-counter">01 / 06</div>
+        </div>
 
         <div class="hscroll-track-wrapper">
           <div class="hscroll-track" id="hscroll-track">
 
-            <!-- ======= SCROLLER ITEM 1 ======= -->
+            <!-- ===== ITEM 1 ===== -->
             <div class="hscroll-item">
-              <img
-                src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80"
-                alt="Project 1"
-                loading="lazy"
-              />
-              <div class="hscroll-item-caption">Branding — 2024</div>
+              <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=700&q=80" alt="Project" loading="lazy" />
+              <div class="hscroll-item-caption">BRANDING — 2024</div>
             </div>
 
-            <!-- ======= SCROLLER ITEM 2 ======= -->
+            <!-- ===== ITEM 2 ===== -->
             <div class="hscroll-item">
-              <img
-                src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=600&q=80"
-                alt="Project 2"
-                loading="lazy"
-              />
-              <div class="hscroll-item-caption">Print — 2024</div>
+              <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=700&q=80" alt="Project" loading="lazy" />
+              <div class="hscroll-item-caption">PRINT — 2024</div>
             </div>
 
-            <!-- ======= SCROLLER ITEM 3 ======= -->
+            <!-- ===== ITEM 3 ===== -->
             <div class="hscroll-item">
-              <img
-                src="https://images.unsplash.com/photo-1542744095-fcf48d80b0fd?w=600&q=80"
-                alt="Project 3"
-                loading="lazy"
-              />
-              <div class="hscroll-item-caption">Web Design — 2024</div>
+              <img src="https://images.unsplash.com/photo-1542744095-fcf48d80b0fd?w=700&q=80" alt="Project" loading="lazy" />
+              <div class="hscroll-item-caption">WEB DESIGN — 2024</div>
             </div>
 
-            <!-- ======= SCROLLER ITEM 4 ======= -->
+            <!-- ===== ITEM 4 ===== -->
             <div class="hscroll-item">
-              <img
-                src="https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?w=600&q=80"
-                alt="Project 4"
-                loading="lazy"
-              />
-              <div class="hscroll-item-caption">Motion — 2025</div>
+              <img src="https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?w=700&q=80" alt="Project" loading="lazy" />
+              <div class="hscroll-item-caption">MOTION — 2025</div>
             </div>
 
-            <!-- ======= SCROLLER ITEM 5 ======= -->
+            <!-- ===== ITEM 5 ===== -->
             <div class="hscroll-item">
-              <img
-                src="https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=600&q=80"
-                alt="Project 5"
-                loading="lazy"
-              />
-              <div class="hscroll-item-caption">Poster — 2025</div>
+              <img src="https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=700&q=80" alt="Project" loading="lazy" />
+              <div class="hscroll-item-caption">POSTER — 2025</div>
             </div>
 
-            <!-- ======= SCROLLER ITEM 6 ======= -->
+            <!-- ===== ITEM 6 ===== -->
             <div class="hscroll-item">
-              <img
-                src="https://images.unsplash.com/photo-1547658719-da2b51169166?w=600&q=80"
-                alt="Project 6"
-                loading="lazy"
-              />
-              <div class="hscroll-item-caption">LED Motion — 2025</div>
+              <img src="https://images.unsplash.com/photo-1547658719-da2b51169166?w=700&q=80" alt="Project" loading="lazy" />
+              <div class="hscroll-item-caption">LED STADIUM — 2025</div>
             </div>
 
-            <!-- ======= ADD MORE ITEMS HERE ======= -->
-            <!--
+            <!-- ===== ADD MORE ITEMS HERE =====
             <div class="hscroll-item">
-              <img src="YOUR_IMAGE_PATH.jpg" alt="Project Name" loading="lazy" />
-              <div class="hscroll-item-caption">Category — Year</div>
+              <img src="YOUR_IMAGE.jpg" alt="Project name" loading="lazy" />
+              <div class="hscroll-item-caption">CATEGORY — YEAR</div>
             </div>
             -->
 
           </div>
         </div>
 
-        <div class="hscroll-progress-bar">
-          <div class="hscroll-progress-fill"></div>
+        <div class="hscroll-footer">
+          <div class="hscroll-progress-bar">
+            <div class="hscroll-progress-fill"></div>
+          </div>
+          <span class="hscroll-hint">drag or scroll →</span>
         </div>
+
       </div>
     </section>
 
-    <!-- INTRO BLURB -->
+    <!-- INTRO -->
     <section class="intro-section">
-      <div>
-        <p class="intro-label">About the work</p>
-      </div>
+      <div class="intro-number" aria-hidden="true">01</div>
       <div class="intro-text">
-        <h2>Design that<br />feels like <em>something.</em></h2>
+        <h2>DESIGN THAT<br />FEELS LIKE <em>SOMETHING.</em></h2>
         <p>
-          I'm a graphic designer working at Tingh kommunikasjon in Molde.
-          Branding, social media, print, web, motion — the full stack of visual
-          communication done without cutting corners.
+          I'm Markus, a graphic designer at Tingh kommunikasjon in Molde. My work covers
+          branding systems, social media, posters, rollups, Squarespace and Webflow builds,
+          and motion work in After Effects — including LED panel animations for Molde FK stadium.
         </p>
         <p>
-          Everything from LED panel animations at Molde FK stadium to rollups
-          to full brand identities. If it needs to look good and work hard, that's
-          the kind of problem I like.
+          I care about design that has an actual point of view. Not the stuff that looks like
+          it could belong to anyone.
         </p>
-        <a href="#work" data-page="work" class="btn btn-rust">View the work →</a>
+        <a href="#work" data-page="work" class="btn btn-pink">VIEW THE WORK →</a>
       </div>
     </section>
 
-    <!-- FOOTER -->
+    <div class="stripe-bar">
+      <span></span><span></span><span></span><span></span><span></span><span></span>
+    </div>
+
     <footer class="footer">
-      <div class="footer-name">Markus Håland</div>
-      <div class="footer-copy">© 2025 — All rights reserved</div>
+      <div class="footer-name">MARKUS HÅLAND</div>
+      <div class="footer-copy">© 2025 — ALL RIGHTS RESERVED</div>
       <div class="footer-links">
-        <a href="#home" data-page="home">Home</a>
-        <a href="#about" data-page="about">About</a>
-        <a href="#work" data-page="work">Work</a>
+        <a href="#home"    data-page="home">Home</a>
+        <a href="#about"   data-page="about">About</a>
+        <a href="#work"    data-page="work">Work</a>
         <a href="#contact" data-page="contact">Contact</a>
       </div>
     </footer>
@@ -203,70 +230,73 @@
 
 
   <!-- ================================================================
-       ABOUT PAGE
+       ABOUT
   ================================================================ -->
   <div class="page" id="page-about">
     <main class="about-page">
 
-      <div class="about-header">
-        <div class="about-header-num">01</div>
-        <h1>About<br /><em>Me</em></h1>
+      <div class="page-header">
+        <h1>ABOUT<br /><em>ME.</em></h1>
+        <div class="page-header-meta">
+          MARKUS HÅLAND<br />
+          GRAPHIC DESIGNER<br />
+          MOLDE, NORWAY<br />
+          EST. 2024
+        </div>
       </div>
 
       <div class="about-grid">
+
         <div class="about-photo">
-          <!-- Swap this for a real photo of yourself -->
-          <div class="about-photo-placeholder">
-            Photo goes<br />here
-          </div>
+          <!-- Replace this with: <img src="your-photo.jpg" alt="Markus Håland" /> -->
+          <div class="about-photo-placeholder">YOUR PHOTO<br />GOES HERE</div>
+          <div class="about-photo-label">MARKUS HÅLAND — MH</div>
         </div>
 
         <div class="about-content">
           <p>
-            I'm Markus, a 19-year-old graphic designer at
-            <strong>Tingh kommunikasjon</strong> in Molde, Norway. My days
-            look like branding systems, social media visuals, poster and rollup
-            design, Squarespace and Webflow builds, and motion work in After
-            Effects — including LED panel animations for Molde FK stadium.
+            I'm a 19-year-old graphic designer working at <strong>Tingh kommunikasjon</strong> in Molde.
+            My days are split between branding systems, social media content, print design (posters,
+            rollups, t-shirts), web builds on Squarespace and Webflow, and motion work in After Effects.
           </p>
           <p>
-            My main tools are Photoshop, Illustrator, After Effects, and
-            Premiere Pro. Outside of work I'm deep into content creation,
-            Valorant, skating, Japanese streetwear, and eventually Tokyo or LA.
+            One of the cooler things I've done is <strong>LED panel animations for Molde FK stadium</strong>.
+            My main tools are Photoshop, Illustrator, After Effects, and Premiere Pro.
           </p>
           <p>
-            I care about design that doesn't look like it came out of a template
-            generator. The kind of stuff that has a real point of view and
-            holds up when you look at it for more than three seconds.
+            Outside of work: content creation, Valorant at Immortal rank, skating, Japanese streetwear,
+            and planning a move to Tokyo or LA someday. The long-term plan is a top-tier design agency
+            or going full-time creator. Either way, the work has to be good.
           </p>
 
-          <div class="skills-list">
-            <h3>Tools & Disciplines</h3>
-            <div class="skills-grid">
-              <span class="skill-item">Adobe Photoshop</span>
-              <span class="skill-item">Adobe Illustrator</span>
-              <span class="skill-item">After Effects</span>
-              <span class="skill-item">Premiere Pro</span>
-              <span class="skill-item">Squarespace</span>
-              <span class="skill-item">Webflow</span>
-              <span class="skill-item">Branding</span>
-              <span class="skill-item">Print Design</span>
-              <span class="skill-item">Motion Design</span>
-              <span class="skill-item">Social Media</span>
-              <span class="skill-item">Web Design</span>
-              <span class="skill-item">Content Creation</span>
+          <div class="skills-block">
+            <h3>TOOLS & DISCIPLINES</h3>
+            <div class="skills-tags">
+              <span class="tag tag-pink">Photoshop</span>
+              <span class="tag tag-blue">Illustrator</span>
+              <span class="tag tag-orange">After Effects</span>
+              <span class="tag tag-green">Premiere Pro</span>
+              <span class="tag tag-purple">Squarespace</span>
+              <span class="tag tag-pink">Webflow</span>
+              <span class="tag tag-blue">Branding</span>
+              <span class="tag tag-orange">Print</span>
+              <span class="tag tag-green">Motion</span>
+              <span class="tag tag-purple">Web Design</span>
+              <span class="tag tag-pink">Social Media</span>
+              <span class="tag tag-blue">Content Creation</span>
             </div>
           </div>
 
-          <a href="#contact" data-page="contact" class="btn btn-rust" style="margin-top:2rem">Get in touch →</a>
+          <a href="#contact" data-page="contact" class="btn btn-pink" style="margin-top:2.5rem">GET IN TOUCH →</a>
         </div>
-      </div>
 
+      </div>
     </main>
 
+    <div class="stripe-bar"><span></span><span></span><span></span><span></span><span></span><span></span></div>
     <footer class="footer">
-      <div class="footer-name">Markus Håland</div>
-      <div class="footer-copy">© 2025 — All rights reserved</div>
+      <div class="footer-name">MARKUS HÅLAND</div>
+      <div class="footer-copy">© 2025 — ALL RIGHTS RESERVED</div>
       <div class="footer-links">
         <a href="#home" data-page="home">Home</a>
         <a href="#work" data-page="work">Work</a>
@@ -277,91 +307,90 @@
 
 
   <!-- ================================================================
-       WORK PAGE
+       WORK
   ================================================================ -->
   <div class="page" id="page-work">
     <main class="work-page">
 
-      <div class="work-header">
-        <h1>Selected<br /><em>Work</em></h1>
-        <p class="work-header-sub">Branding ✦ Print ✦ Motion ✦ Web ✦ Social</p>
+      <div class="page-header">
+        <h1>SELECTED<br /><em>WORK.</em></h1>
+        <div class="page-header-meta">
+          BRANDING ✦ PRINT<br />
+          MOTION ✦ WEB<br />
+          SOCIAL ✦ IDENTITY
+        </div>
       </div>
 
+      <!-- Replace images and titles with your real projects -->
       <div class="work-grid">
 
-        <!-- ======= WORK ITEM — replace images & text with your actual projects ======= -->
-        <div class="work-item">
-          <div class="work-item-image">
-            <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=700&q=80" alt="Project" loading="lazy" />
-            <span class="work-item-tag">Branding</span>
+        <div class="work-card">
+          <div class="work-card-image">
+            <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80" alt="Project" loading="lazy" />
           </div>
-          <div class="work-item-info">
-            <div class="work-item-title">Project Name</div>
-            <div class="work-item-meta">Branding ✦ 2024</div>
+          <div class="work-card-info">
+            <div class="work-card-title">PROJECT NAME</div>
+            <div class="work-card-meta">BRANDING<br />2024</div>
           </div>
         </div>
 
-        <div class="work-item">
-          <div class="work-item-image">
-            <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=700&q=80" alt="Project" loading="lazy" />
-            <span class="work-item-tag">Print</span>
+        <div class="work-card">
+          <div class="work-card-image">
+            <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&q=80" alt="Project" loading="lazy" />
           </div>
-          <div class="work-item-info">
-            <div class="work-item-title">Poster Series</div>
-            <div class="work-item-meta">Print ✦ 2024</div>
-          </div>
-        </div>
-
-        <div class="work-item">
-          <div class="work-item-image">
-            <img src="https://images.unsplash.com/photo-1542744095-fcf48d80b0fd?w=700&q=80" alt="Project" loading="lazy" />
-            <span class="work-item-tag">Web</span>
-          </div>
-          <div class="work-item-info">
-            <div class="work-item-title">Web Design</div>
-            <div class="work-item-meta">Web ✦ Webflow ✦ 2024</div>
+          <div class="work-card-info">
+            <div class="work-card-title">POSTER SERIES</div>
+            <div class="work-card-meta">PRINT<br />2024</div>
           </div>
         </div>
 
-        <div class="work-item">
-          <div class="work-item-image">
-            <img src="https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?w=700&q=80" alt="Project" loading="lazy" />
-            <span class="work-item-tag">Motion</span>
+        <div class="work-card">
+          <div class="work-card-image">
+            <img src="https://images.unsplash.com/photo-1542744095-fcf48d80b0fd?w=800&q=80" alt="Project" loading="lazy" />
           </div>
-          <div class="work-item-info">
-            <div class="work-item-title">LED Stadium Motion</div>
-            <div class="work-item-meta">Motion ✦ After Effects ✦ 2025</div>
-          </div>
-        </div>
-
-        <div class="work-item">
-          <div class="work-item-image">
-            <img src="https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=700&q=80" alt="Project" loading="lazy" />
-            <span class="work-item-tag">Social</span>
-          </div>
-          <div class="work-item-info">
-            <div class="work-item-title">Social Campaign</div>
-            <div class="work-item-meta">Social ✦ 2025</div>
+          <div class="work-card-info">
+            <div class="work-card-title">WEB PROJECT</div>
+            <div class="work-card-meta">WEB / WEBFLOW<br />2024</div>
           </div>
         </div>
 
-        <div class="work-item">
-          <div class="work-item-image">
-            <img src="https://images.unsplash.com/photo-1547658719-da2b51169166?w=700&q=80" alt="Project" loading="lazy" />
-            <span class="work-item-tag">Branding</span>
+        <div class="work-card">
+          <div class="work-card-image">
+            <img src="https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?w=800&q=80" alt="Project" loading="lazy" />
           </div>
-          <div class="work-item-info">
-            <div class="work-item-title">Identity System</div>
-            <div class="work-item-meta">Branding ✦ 2025</div>
+          <div class="work-card-info">
+            <div class="work-card-title">MOLDE FK LED</div>
+            <div class="work-card-meta">MOTION / AE<br />2025</div>
           </div>
         </div>
 
-      </div><!-- /work-grid -->
+        <div class="work-card">
+          <div class="work-card-image">
+            <img src="https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=800&q=80" alt="Project" loading="lazy" />
+          </div>
+          <div class="work-card-info">
+            <div class="work-card-title">SOCIAL CAMPAIGN</div>
+            <div class="work-card-meta">SOCIAL<br />2025</div>
+          </div>
+        </div>
+
+        <div class="work-card">
+          <div class="work-card-image">
+            <img src="https://images.unsplash.com/photo-1547658719-da2b51169166?w=800&q=80" alt="Project" loading="lazy" />
+          </div>
+          <div class="work-card-info">
+            <div class="work-card-title">IDENTITY SYSTEM</div>
+            <div class="work-card-meta">BRANDING<br />2025</div>
+          </div>
+        </div>
+
+      </div>
     </main>
 
+    <div class="stripe-bar"><span></span><span></span><span></span><span></span><span></span><span></span></div>
     <footer class="footer">
-      <div class="footer-name">Markus Håland</div>
-      <div class="footer-copy">© 2025 — All rights reserved</div>
+      <div class="footer-name">MARKUS HÅLAND</div>
+      <div class="footer-copy">© 2025 — ALL RIGHTS RESERVED</div>
       <div class="footer-links">
         <a href="#home" data-page="home">Home</a>
         <a href="#about" data-page="about">About</a>
@@ -372,52 +401,65 @@
 
 
   <!-- ================================================================
-       CONTACT PAGE
+       CONTACT
   ================================================================ -->
   <div class="page" id="page-contact">
     <main class="contact-page">
 
-      <div class="contact-top">
-        <h1>Let's<br /><em>Talk.</em></h1>
-        <p class="contact-intro">
-          Got a project, a question, or just want to see if we're a good fit?
-          Reach out any of these ways.
-        </p>
+      <div class="page-header">
+        <h1>LET'S<br /><em>TALK.</em></h1>
+        <div class="page-header-meta">
+          MOLDE, NORWAY<br />
+          UTC+1 / UTC+2
+        </div>
       </div>
 
-      <div class="contact-links">
+      <p class="contact-intro-text">
+        Got a project, a collab, or just want to say what's up? Hit me up.
+      </p>
 
-        <a href="mailto:your@email.com" class="contact-link-row">
-          <span class="contact-link-label">Email</span>
-          <span class="contact-link-type">Direct message</span>
-          <span class="contact-link-arrow">→</span>
+      <div class="contact-list">
+
+        <a href="mailto:your@email.com" class="contact-row">
+          <div class="contact-row-left">
+            <span class="contact-row-name">EMAIL</span>
+            <span class="contact-row-type">Direct</span>
+          </div>
+          <span class="contact-row-arrow">→</span>
         </a>
 
-        <a href="https://instagram.com/yourhandle" target="_blank" rel="noopener" class="contact-link-row">
-          <span class="contact-link-label">Instagram</span>
-          <span class="contact-link-type">@yourhandle</span>
-          <span class="contact-link-arrow">→</span>
+        <a href="https://instagram.com/yourhandle" target="_blank" rel="noopener" class="contact-row">
+          <div class="contact-row-left">
+            <span class="contact-row-name">INSTAGRAM</span>
+            <span class="contact-row-type">@yourhandle</span>
+          </div>
+          <span class="contact-row-arrow">→</span>
         </a>
 
-        <a href="https://linkedin.com/in/yourprofile" target="_blank" rel="noopener" class="contact-link-row">
-          <span class="contact-link-label">LinkedIn</span>
-          <span class="contact-link-type">Professional</span>
-          <span class="contact-link-arrow">→</span>
+        <a href="https://linkedin.com/in/yourprofile" target="_blank" rel="noopener" class="contact-row">
+          <div class="contact-row-left">
+            <span class="contact-row-name">LINKEDIN</span>
+            <span class="contact-row-type">Professional</span>
+          </div>
+          <span class="contact-row-arrow">→</span>
         </a>
 
-        <a href="https://behance.net/yourprofile" target="_blank" rel="noopener" class="contact-link-row">
-          <span class="contact-link-label">Behance</span>
-          <span class="contact-link-type">Design work</span>
-          <span class="contact-link-arrow">→</span>
+        <a href="https://behance.net/yourprofile" target="_blank" rel="noopener" class="contact-row">
+          <div class="contact-row-left">
+            <span class="contact-row-name">BEHANCE</span>
+            <span class="contact-row-type">Design work</span>
+          </div>
+          <span class="contact-row-arrow">→</span>
         </a>
 
       </div>
 
     </main>
 
+    <div class="stripe-bar"><span></span><span></span><span></span><span></span><span></span><span></span></div>
     <footer class="footer">
-      <div class="footer-name">Markus Håland</div>
-      <div class="footer-copy">© 2025 — All rights reserved</div>
+      <div class="footer-name">MARKUS HÅLAND</div>
+      <div class="footer-copy">© 2025 — ALL RIGHTS RESERVED</div>
       <div class="footer-links">
         <a href="#home" data-page="home">Home</a>
         <a href="#about" data-page="about">About</a>
@@ -428,40 +470,42 @@
 
 
   <!-- ================================================================
-       EASTER EGG PAGE
-       (Reached via the tiny dot bottom-right or Konami code)
+       EASTER EGG
+       — Found via: tiny dot bottom-right OR Konami code ↑↑↓↓←→←→BA
   ================================================================ -->
   <div class="page" id="page-easter">
     <main class="easter-page">
 
-      <!-- VHS label inspired by the Sakura Chroma reference -->
-      <div class="easter-vhs">
-        <div class="easter-vhs-label">
-          <h2>SECRET</h2>
-          <div class="easter-stripes">
-            <span style="background:#C8112A"></span>
-            <span style="background:#e05a00"></span>
-            <span style="background:#d4a000"></span>
-            <span style="background:#2a7a2a"></span>
-            <span style="background:#1A3A8A"></span>
-          </div>
-          <h3>UNLOCKED ✦ PLAY MODE</h3>
+      <div class="easter-vhs-card">
+        <div class="stripe-bar"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+        <br />
+        <div class="easter-vhs-brand">
+          <span>MH-STUDIO</span>
+          <span>T-XX VHS</span>
+        </div>
+        <div class="easter-vhs-title">
+          SE<span>CR</span>ET
+        </div>
+        <div class="easter-vhs-sub">
+          <span>LO-FI ☑</span>
+          <span>STEREO ☑</span>
+          <span>日本製</span>
         </div>
       </div>
 
       <div class="easter-content">
-        <h1>You found<br />the <em>secret page.</em></h1>
+        <h1>YOU FOUND<br />THE <em>HIDDEN PAGE.</em></h1>
         <p>
-          Either you're very curious, you noticed the tiny dot, or you know
-          the Konami code. Respect. Have a good one.
+          Either you noticed the tiny dot in the corner, you know the Konami code,
+          or you're just very curious. Respect. Now rewind before returning.
         </p>
-        <a href="#home" data-page="home" class="btn">← Back to reality</a>
+        <a href="#home" data-page="home" class="btn btn-pink">← REWIND</a>
       </div>
 
       <p class="static-text">
-        VPS-001 ✦ MARKUS.HÅLAND ✦ MOLDE, NO ✦ SIG: blight#fate ✦
-        NR: ☐ ON ☑ OFF ✦ AS SEEN ON MH ✦ 高品質ポートフォリオ ✦
-        REWIND BEFORE RETURNING ✦ T-XX SUPERCASSETTE
+        VPS-001 ✦ MARKUS.HÅLAND ✦ MOLDE, NO ✦ blight#fate ✦ niceu ✦
+        高品質ポートフォリオ ✦ T-XX SUPERCASSETTE ✦ NR: ☐ ON ☑ OFF ✦
+        AS SEEN ON MH ✦ REWIND BEFORE RETURNING ✦ COLOR ☑ LO-FI ☑
       </p>
 
     </main>

@@ -1,152 +1,125 @@
 /* =========================================
-   PORTFOLIO SITE JS
+   PORTFOLIO — MAIN JS
    ========================================= */
 
-// ---- NAVIGATION / PAGE ROUTING ----
-const pages = document.querySelectorAll('.page');
+// ---- PAGE ROUTING ----
+const pages    = document.querySelectorAll('.page');
 const navLinks = document.querySelectorAll('[data-page]');
 
-function showPage(pageId) {
-  pages.forEach(p => {
-    p.classList.remove('active');
-  });
-
-  const target = document.getElementById(`page-${pageId}`);
+function showPage(id) {
+  pages.forEach(p => p.classList.remove('active'));
+  const target = document.getElementById(`page-${id}`);
   if (target) {
     target.classList.add('active');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0 });
   }
-
-  // Update active nav link
-  navLinks.forEach(link => {
-    link.classList.toggle('nav-active', link.dataset.page === pageId);
+  navLinks.forEach(l => {
+    l.classList.toggle('nav-active', l.dataset.page === id);
   });
-
-  // Update URL hash
-  history.pushState(null, null, `#${pageId}`);
-
-  // Re-init hscroll if going home
-  if (pageId === 'home') {
-    setTimeout(initHScroll, 100);
-  }
+  history.pushState(null, null, `#${id}`);
+  if (id === 'home') setTimeout(initHScroll, 80);
 }
 
-navLinks.forEach(link => {
-  link.addEventListener('click', (e) => {
-    e.preventDefault();
-    showPage(link.dataset.page);
-  });
-});
+navLinks.forEach(l => l.addEventListener('click', e => {
+  e.preventDefault();
+  showPage(l.dataset.page);
+}));
 
-// Handle back/forward
 window.addEventListener('popstate', () => {
-  const hash = window.location.hash.replace('#', '') || 'home';
-  showPage(hash);
+  showPage(location.hash.replace('#', '') || 'home');
 });
 
-// Init from URL
-const initPage = window.location.hash.replace('#', '') || 'home';
-showPage(initPage);
+showPage(location.hash.replace('#', '') || 'home');
+
 
 // ---- HORIZONTAL SCROLL ----
 /*
-  HOW TO ADD NEW IMAGES TO THE SCROLLER:
-  In index.html, find the div with id="hscroll-track".
-  Copy one of the existing .hscroll-item divs and swap the image src and caption.
-  That's it.
+  ┌─────────────────────────────────────────┐
+  │  HOW TO ADD IMAGES TO THE SCROLLER      │
+  │                                         │
+  │  Find the div id="hscroll-track"        │
+  │  in index.html. Copy one .hscroll-item  │
+  │  block, paste it inside, swap the img   │
+  │  src and caption text. Done.            │
+  │                                         │
+  │  The JS adapts automatically.           │
+  └─────────────────────────────────────────┘
 */
+let hscrollCleanup = null;
+
 function initHScroll() {
-  const section = document.querySelector('.hscroll-section');
-  const track = document.querySelector('.hscroll-track');
+  if (hscrollCleanup) hscrollCleanup();
+
+  const section      = document.querySelector('.hscroll-section');
+  const track        = document.querySelector('.hscroll-track');
   const progressFill = document.querySelector('.hscroll-progress-fill');
+  const counter      = document.querySelector('.hscroll-counter');
 
   if (!section || !track) return;
 
-  const items = track.querySelectorAll('.hscroll-item');
-  const itemCount = items.length;
+  const itemCount   = track.querySelectorAll('.hscroll-item').length;
+  const scrollH     = window.innerHeight * (itemCount * 0.55 + 1.2);
+  section.style.height = `${scrollH}px`;
 
-  if (itemCount === 0) return;
-
-  // How tall is the scroll section (controls scroll speed/distance)
-  // Each item adds some scroll distance
-  const scrollHeight = window.innerHeight * (itemCount * 0.5 + 1);
-  section.style.height = `${scrollHeight}px`;
-
-  function updateTrack() {
-    const rect = section.getBoundingClientRect();
+  function update() {
+    const rect       = section.getBoundingClientRect();
     const sectionTop = -rect.top;
-    const sectionScrollable = scrollHeight - window.innerHeight;
+    const scrollable = scrollH - window.innerHeight;
 
-    // Only animate when section is in view
-    if (sectionTop < 0 || sectionTop > sectionScrollable) return;
+    if (sectionTop < 0 || sectionTop > scrollable) return;
 
-    const progress = sectionTop / sectionScrollable; // 0 to 1
+    const progress   = Math.min(Math.max(sectionTop / scrollable, 0), 1);
+    const trackW     = track.scrollWidth;
+    const vpW        = window.innerWidth;
+    const maxTx      = -(trackW - vpW + 64);
 
-    // Total track width - viewport width
-    const trackWidth = track.scrollWidth;
-    const viewportWidth = window.innerWidth;
-    const maxTranslate = -(trackWidth - viewportWidth + 96); // 96 = padding
-
-    const translateX = progress * maxTranslate;
-    track.style.transform = `translateX(${translateX}px)`;
-
-    // Progress bar
-    if (progressFill) {
-      progressFill.style.width = `${progress * 100}%`;
+    track.style.transform = `translateX(${progress * maxTx}px)`;
+    if (progressFill) progressFill.style.width = `${progress * 100}%`;
+    if (counter) {
+      const idx = Math.ceil(progress * itemCount);
+      counter.textContent = `${String(idx).padStart(2,'0')} / ${String(itemCount).padStart(2,'0')}`;
     }
   }
 
-  window.addEventListener('scroll', updateTrack, { passive: true });
-  updateTrack();
+  window.addEventListener('scroll', update, { passive: true });
+  update();
+  hscrollCleanup = () => window.removeEventListener('scroll', update);
 }
 
-// Init on load
 window.addEventListener('load', () => {
   if (document.getElementById('page-home').classList.contains('active')) {
     initHScroll();
   }
 });
 
-// ---- TICKER TAPE DUPLICATION ----
-function initTicker() {
-  const inner = document.querySelector('.ticker-inner');
-  if (!inner) return;
-  // Duplicate for seamless loop
-  const clone = inner.cloneNode(true);
-  inner.parentElement.appendChild(clone);
-}
 
-// ---- EASTER EGG ----
-const easterBtn = document.getElementById('easter-trigger');
-if (easterBtn) {
-  easterBtn.addEventListener('click', () => {
-    showPage('easter');
-  });
-}
-
-// Konami code easter egg as well
-let konamiSequence = [];
-const konamiCode = [38,38,40,40,37,39,37,39,66,65]; // up up down down left right left right B A
-
-document.addEventListener('keydown', (e) => {
-  konamiSequence.push(e.keyCode);
-  konamiSequence = konamiSequence.slice(-10);
-  if (konamiSequence.join(',') === konamiCode.join(',')) {
-    showPage('easter');
-  }
+// ---- TICKER DUPLICATION ----
+window.addEventListener('DOMContentLoaded', () => {
+  const track = document.querySelector('.ticker-track');
+  if (track) track.appendChild(track.cloneNode(true));
 });
 
-// ---- TICKER INIT ----
-document.addEventListener('DOMContentLoaded', initTicker);
 
-// ---- SUBTLE HOVER PARALLAX ON HERO ----
-document.addEventListener('mousemove', (e) => {
-  const heroFrame = document.querySelector('.hero-image-frame img');
-  if (!heroFrame) return;
+// ---- EASTER EGG ----
+document.getElementById('easter-trigger')?.addEventListener('click', () => {
+  showPage('easter');
+});
 
-  const { clientX, clientY } = e;
-  const xRatio = (clientX / window.innerWidth - 0.5) * 8;
-  const yRatio = (clientY / window.innerHeight - 0.5) * 5;
+// Konami: ↑↑↓↓←→←→BA
+let seq = [];
+const konami = [38,38,40,40,37,39,37,39,66,65];
+document.addEventListener('keydown', e => {
+  seq.push(e.keyCode);
+  seq = seq.slice(-10);
+  if (seq.join() === konami.join()) showPage('easter');
+});
 
-  heroFrame.style.transform = `scale(1.04) translate(${xRatio}px, ${yRatio}px)`;
+
+// ---- SUBTLE MOUSE PARALLAX ON HERO IMAGE ----
+document.addEventListener('mousemove', e => {
+  const img = document.querySelector('.hero-right img');
+  if (!img) return;
+  const x = (e.clientX / innerWidth  - 0.5) * 12;
+  const y = (e.clientY / innerHeight - 0.5) * 8;
+  img.style.transform = `scale(1.06) translate(${x}px, ${y}px)`;
 });
