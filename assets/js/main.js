@@ -40,6 +40,16 @@ function initHScroll() {
 
   if (!section || !track || items.length === 0) return;
 
+  // On mobile the scroller is vertical — no JS needed
+  if (isMobile()) {
+    section.style.height = '';
+    items.forEach(item => {
+      item.classList.remove('is-active','is-prev','is-next','is-far');
+      item.classList.add('is-active');
+    });
+    return;
+  }
+
   let current = 0;
 
   function getOffset(idx) {
