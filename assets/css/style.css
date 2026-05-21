@@ -622,21 +622,32 @@ img { display: block; max-width: 100%; }
 .work-page { padding: 7rem 2.5rem 5rem; max-width: 1300px; margin: 0 auto; }
 
 .work-grid {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-auto-rows: 80px;
+  gap: 1rem;
 }
-.work-card { position: relative; cursor: pointer; }
+
+/* Card spans — each one a different shape */
+.work-card:nth-child(1) { grid-column: span 7; grid-row: span 5; }
+.work-card:nth-child(2) { grid-column: span 5; grid-row: span 4; }
+.work-card:nth-child(3) { grid-column: span 5; grid-row: span 5; }
+.work-card:nth-child(4) { grid-column: span 7; grid-row: span 4; }
+
+.work-card { position: relative; cursor: pointer; display: flex; flex-direction: column; }
 
 .work-card-image {
-  aspect-ratio: 4/3; overflow: hidden; position: relative;
+  flex: 1; overflow: hidden; position: relative;
   background: rgba(10,10,10,0.05);
+  min-height: 0;
 }
 .work-card-image img {
   width: 100%; height: 100%; object-fit: cover;
+  object-position: center top;
   transition: transform 0.55s ease;
   display: block;
 }
-.work-card:hover .work-card-image img { transform: scale(1.05); }
+.work-card:hover .work-card-image img { transform: scale(1.03); }
 
 .work-card-image::after {
   content: ''; position: absolute; inset: 0;
@@ -894,7 +905,9 @@ img { display: block; max-width: 100%; }
 
   /* WORK */
   .work-page { padding: 5rem 1.5rem 3rem; }
-  .work-grid { grid-template-columns: 1fr; gap: 1.2rem; }
+  .work-grid { grid-template-columns: 1fr; grid-auto-rows: auto; gap: 1.2rem; }
+  .work-card { grid-column: span 1 !important; grid-row: span 1 !important; }
+  .work-card-image { aspect-ratio: 4/3; flex: none; }
 
   /* CONTACT */
   .contact-page { padding: 5rem 1.5rem 3rem; }
@@ -997,7 +1010,7 @@ img { display: block; max-width: 100%; }
    CUSTOM PIXEL CURSOR
    ========================================= */
 body { cursor: url("images/cursor.svg") 0 0, auto; }
-*, *::before, *::after { cursor: url("images/cursor.svg") 0 0, auto; }
+a, button, [data-page], .work-card, .taskbar-item { cursor: url("images/cursor.svg") 0 0, auto; }
 
 .cursor {
   position: fixed; top: 0; left: 0;
@@ -1161,4 +1174,11 @@ body { cursor: url("images/cursor.svg") 0 0, auto; }
   /* No custom cursor on touch */
   *, *::before, *::after { cursor: auto !important; }
   .cursor { display: none; }
+}
+
+/* ChatGPT Image tool badge — subtle distinction */
+.project-overlay-tool[data-tool="chatgpt"],
+.project-overlay-tool.tool-ai {
+  border-color: rgba(127,102,198,0.4);
+  color: rgba(127,102,198,0.8);
 }

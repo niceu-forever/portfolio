@@ -266,7 +266,11 @@ function openProject(card) {
   if (poDesc)    poDesc.textContent    = card.dataset.desc      || '';
   if (poTools && card.dataset.tools) {
     poTools.innerHTML = card.dataset.tools.split(',')
-      .map(t => `<span class="project-overlay-tool">${t.trim()}</span>`).join('');
+      .map(t => {
+        const tool = t.trim();
+        const isAI = tool.toLowerCase().includes('chatgpt') || tool.toLowerCase().includes('ai');
+        return `<span class="project-overlay-tool${isAI ? ' tool-ai' : ''}">${tool}</span>`;
+      }).join('');
   }
 
   updateProjectOverlay();
@@ -293,7 +297,14 @@ poNext?.addEventListener('click', e => {
 
 document.getElementById('po-close')?.addEventListener('click', closeProject);
 projectOverlay?.addEventListener('click', e => {
-  if (e.target === projectOverlay) closeProject();
+  // Close if clicking the dark background (not the content panels)
+  const img = document.querySelector('.project-overlay-img');
+  const info = document.querySelector('.project-overlay-info');
+  if (!img?.contains(e.target) && !info?.contains(e.target)) closeProject();
+});
+
+document.addEventListener('keydown', e => {
+  if (projectOverlay?.classList.contains('open') && e.key === 'Escape') closeProject();
 });
 
 document.querySelectorAll('.work-card').forEach(card => {
