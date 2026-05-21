@@ -319,7 +319,7 @@ img { display: block; max-width: 100%; }
 .hscroll-item img {
   width: auto;          /* natural width driven by aspect ratio */
   height: 100%;
-  max-width: min(700px, 80vw);
+  max-width: none;
   object-fit: cover;
   display: block;
   transition: transform 0.6s ease;
