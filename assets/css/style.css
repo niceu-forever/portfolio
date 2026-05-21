@@ -66,8 +66,8 @@ img { display: block; max-width: 100%; }
 .nav-logo {
   font-family: var(--font-script);
   font-size: 1.8rem; letter-spacing: 0.02em;
-  color: var(--pink);
-  text-shadow: 0 0 12px rgba(46,23,96,0.8), 0 0 30px rgba(46,23,96,0.4);
+  color: #7f66c6;
+  text-shadow: 0 0 8px #7f66c6, 0 0 20px #7f66c6, 0 0 40px rgba(127,102,198,0.5);
   display: flex; align-items: center; gap: 0.8rem;
   line-height: 1;
 }
@@ -75,10 +75,10 @@ img { display: block; max-width: 100%; }
 .nav-logo-tag {
   font-family: var(--font-mono); font-size: 0.48rem;
   letter-spacing: 0.15em; text-transform: uppercase;
-  color: var(--pink); border: 1px solid var(--pink);
+  color: #7f66c6; border: 1px solid #7f66c6;
   padding: 2px 7px; line-height: 1.4;
-  text-shadow: 0 0 8px rgba(46,23,96,0.9);
-  box-shadow: 0 0 8px rgba(46,23,96,0.4);
+  text-shadow: 0 0 6px #7f66c6;
+  box-shadow: 0 0 8px rgba(127,102,198,0.4);
 }
 
 .nav-links { display: flex; list-style: none; height: 100%; }
