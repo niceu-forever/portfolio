@@ -2,6 +2,17 @@
    PORTFOLIO — MAIN JS
    ========================================= */
 
+// ---- GLITCH TRANSITION ----
+const glitchOverlay = document.getElementById('glitch-overlay');
+
+function triggerGlitch(cb) {
+  if (!glitchOverlay) { cb(); return; }
+  glitchOverlay.classList.add('flash');
+  setTimeout(cb, 120);
+  setTimeout(() => glitchOverlay.classList.remove('flash'), 400);
+}
+
+
 // ---- PAGE ROUTING ----
 const pages    = document.querySelectorAll('.page');
 const navLinks = document.querySelectorAll('[data-page]');
@@ -27,26 +38,15 @@ window.addEventListener('popstate', () => showPage(location.hash.replace('#','')
 showPage(location.hash.replace('#','') || 'home');
 
 
-// ---- GLITCH TRANSITION ----
-const glitchOverlay = document.getElementById('glitch-overlay');
-
-function triggerGlitch(cb) {
-  if (!glitchOverlay) { cb(); return; }
-  glitchOverlay.classList.add('flash');
-  setTimeout(cb, 120);
-  setTimeout(() => glitchOverlay.classList.remove('flash'), 400);
-}
-
-
 // ---- TASKBAR CLOCK ----
 function updateClock() {
   const time = document.getElementById('taskbar-time');
   const date = document.getElementById('taskbar-date');
   if (!time || !date) return;
-  const now  = new Date();
-  const h = String(now.getHours()).padStart(2,'0');
-  const m = String(now.getMinutes()).padStart(2,'0');
-  const s = String(now.getSeconds()).padStart(2,'0');
+  const now    = new Date();
+  const h      = String(now.getHours()).padStart(2,'0');
+  const m      = String(now.getMinutes()).padStart(2,'0');
+  const s      = String(now.getSeconds()).padStart(2,'0');
   time.textContent = `${h}:${m}:${s}`;
   const days   = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
   const months = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
@@ -70,6 +70,11 @@ setInterval(updateClock, 1000);
 
 
 // ---- HORIZONTAL SCROLL ----
+/*
+  TO ADD IMAGES: find id="hscroll-track" in index.html.
+  Copy one .hscroll-item block, paste inside, swap img src + caption.
+  JS adapts automatically.
+*/
 let hscrollCleanup = null;
 
 function isMobile() { return window.innerWidth <= 768; }
@@ -87,6 +92,7 @@ function initHScroll() {
 
   if (!section || !track || items.length === 0) return;
 
+  // Mobile — vertical stack, no JS logic needed
   if (isMobile()) {
     section.style.height = '';
     items.forEach(item => {
@@ -148,6 +154,7 @@ function initHScroll() {
 
   window.addEventListener('scroll', onScroll, { passive: true });
 
+  // Wait for images so offsetWidth is accurate
   const imgPromises = items.map(item => {
     const img = item.querySelector('img');
     if (!img || img.complete) return Promise.resolve();
@@ -168,110 +175,69 @@ window.addEventListener('resize', () => {
 });
 
 
-// ---- PROJECT OVERLAY ----
-const projectOverlay = document.getElementById('project-overlay');
-const poImg     = document.getElementById('po-img');
-const poTitle   = document.getElementById('po-title');
-const poEyebrow = document.getElementById('po-eyebrow');
-const poDesc    = document.getElementById('po-desc');
-const poTools   = document.getElementById('po-tools');
-const poCounter = document.getElementById('po-counter');
-const poPrev    = document.getElementById('po-prev');
-const poNext    = document.getElementById('po-next');
-
-let poImages = [];
-let poIndex  = 0;
-
-function updateProjectOverlay() {
-  poImg.src = poImages[poIndex];
-  if (poCounter) poCounter.textContent = poImages.length > 1
-    ? `${poIndex + 1} / ${poImages.length}` : '';
-  if (poPrev) poPrev.classList.toggle('hidden', poImages.length <= 1);
-  if (poNext) poNext.classList.toggle('hidden', poImages.length <= 1);
-}
-
-function openProject(card) {
-  const raw = card.dataset.images;
-  poImages  = raw ? JSON.parse(raw) : [card.querySelector('.work-card-image img').src];
-  poIndex   = 0;
-  if (poTitle)   poTitle.textContent   = card.dataset.title    || '';
-  if (poEyebrow) poEyebrow.textContent = `${card.dataset.category || ''} — ${card.dataset.year || ''}`;
-  if (poDesc)    poDesc.textContent    = card.dataset.desc      || '';
-  if (poTools && card.dataset.tools) {
-    poTools.innerHTML = card.dataset.tools.split(',').map(t => {
-      const tool = t.trim();
-      const isAI = tool.toLowerCase().includes('chatgpt');
-      return `<span class="project-overlay-tool${isAI ? ' tool-ai' : ''}">${tool}</span>`;
-    }).join('');
-  }
-  updateProjectOverlay();
-  projectOverlay.classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
-
-function closeProject() {
-  projectOverlay.classList.remove('open');
-  document.body.style.overflow = '';
-  setTimeout(() => { if (poImg) poImg.src = ''; poImages = []; }, 300);
-}
-
-poPrev?.addEventListener('click', e => {
-  e.stopPropagation();
-  poIndex = (poIndex - 1 + poImages.length) % poImages.length;
-  updateProjectOverlay();
-});
-poNext?.addEventListener('click', e => {
-  e.stopPropagation();
-  poIndex = (poIndex + 1) % poImages.length;
-  updateProjectOverlay();
-});
-
-document.getElementById('po-close')?.addEventListener('click', e => {
-  e.stopPropagation();
-  closeProject();
-});
-
-// Click outside — on the overlay backdrop itself
-projectOverlay?.addEventListener('click', e => {
-  if (e.target === projectOverlay) closeProject();
-});
-
-document.addEventListener('keydown', e => {
-  if (!projectOverlay?.classList.contains('open')) return;
-  if (e.key === 'Escape') closeProject();
-  if (e.key === 'ArrowLeft')  { poIndex = (poIndex - 1 + poImages.length) % poImages.length; updateProjectOverlay(); }
-  if (e.key === 'ArrowRight') { poIndex = (poIndex + 1) % poImages.length; updateProjectOverlay(); }
-});
-
-document.querySelectorAll('.work-card').forEach(card => {
-  card.addEventListener('click', () => openProject(card));
-});
-
-
-// ---- LIGHTBOX (kept for potential use) ----
+// ---- LIGHTBOX ----
 const lightbox        = document.getElementById('lightbox');
 const lightboxImg     = document.getElementById('lightbox-img');
 const lightboxPrev    = document.getElementById('lightbox-prev');
 const lightboxNext    = document.getElementById('lightbox-next');
 const lightboxCounter = document.getElementById('lightbox-counter');
-let lbImages = [], lbIndex = 0;
+
+let lbImages = [];
+let lbIndex  = 0;
 
 function updateLightbox() {
   if (lightboxImg) lightboxImg.src = lbImages[lbIndex];
-  if (lightboxCounter) lightboxCounter.textContent = lbImages.length > 1 ? `${lbIndex+1} / ${lbImages.length}` : '';
+  if (lightboxCounter) lightboxCounter.textContent =
+    lbImages.length > 1 ? `${lbIndex+1} / ${lbImages.length}` : '';
   if (lightboxPrev) lightboxPrev.classList.toggle('hidden', lbImages.length <= 1);
   if (lightboxNext) lightboxNext.classList.toggle('hidden', lbImages.length <= 1);
 }
 
-function closeLightbox() {
-  lightbox?.classList.remove('open');
-  document.body.style.overflow = '';
+function openLightbox(images, startIndex = 0) {
+  lbImages = Array.isArray(images) ? images : [images];
+  lbIndex  = startIndex;
+  updateLightbox();
+  lightbox.classList.add('open');
+  document.body.style.overflow = 'hidden';
 }
 
-lightboxPrev?.addEventListener('click', e => { e.stopPropagation(); lbIndex = (lbIndex-1+lbImages.length)%lbImages.length; updateLightbox(); });
-lightboxNext?.addEventListener('click', e => { e.stopPropagation(); lbIndex = (lbIndex+1)%lbImages.length; updateLightbox(); });
+function closeLightbox() {
+  lightbox.classList.remove('open');
+  document.body.style.overflow = '';
+  setTimeout(() => { if (lightboxImg) lightboxImg.src = ''; lbImages = []; }, 300);
+}
+
+lightboxPrev?.addEventListener('click', e => {
+  e.stopPropagation();
+  lbIndex = (lbIndex - 1 + lbImages.length) % lbImages.length;
+  updateLightbox();
+});
+lightboxNext?.addEventListener('click', e => {
+  e.stopPropagation();
+  lbIndex = (lbIndex + 1) % lbImages.length;
+  updateLightbox();
+});
 document.getElementById('lightbox-close')?.addEventListener('click', closeLightbox);
 lightbox?.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+document.addEventListener('keydown', e => {
+  if (!lightbox?.classList.contains('open')) return;
+  if (e.key === 'Escape') closeLightbox();
+  if (e.key === 'ArrowLeft')  { lbIndex = (lbIndex-1+lbImages.length)%lbImages.length; updateLightbox(); }
+  if (e.key === 'ArrowRight') { lbIndex = (lbIndex+1)%lbImages.length; updateLightbox(); }
+});
+
+// Work cards open lightbox
+document.querySelectorAll('.work-card').forEach(card => {
+  card.addEventListener('click', () => {
+    const raw = card.dataset.images;
+    if (raw) {
+      try { openLightbox(JSON.parse(raw), 0); } catch(e) {}
+    } else {
+      const img = card.querySelector('.work-card-image img');
+      if (img) openLightbox([img.src], 0);
+    }
+  });
+});
 
 
 // ---- EASTER EGG ----
