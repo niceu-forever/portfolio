@@ -542,12 +542,17 @@ img { display: block; max-width: 100%; }
   align-items: start;
 }
 
+/* Landscape cards sit side by side — row 1 */
+.work-card.is-landscape { }
+
+/* Portrait cards sit side by side — row 2 */
+.work-card.is-portrait { }
+
 .work-card {
   position: relative; cursor: pointer;
   display: flex; flex-direction: column;
   overflow: hidden;
   background: var(--cream);
-  break-inside: avoid;
 }
 
 .work-card-image {
@@ -555,7 +560,7 @@ img { display: block; max-width: 100%; }
   width: 100%;
 }
 
-/* Image shows at full natural size — no cropping, no grey bars */
+/* Full image, no crop, no grey bars */
 .work-card-image img {
   width: 100%;
   height: auto;
@@ -817,6 +822,7 @@ img { display: block; max-width: 100%; }
   .work-page { padding: 5rem 1.5rem 3rem; }
   .work-grid { grid-template-columns: 1fr; gap: 1rem; }
   .work-card-image img { width: 100%; height: auto; }
+  .work-card.is-landscape, .work-card.is-portrait { grid-column: span 1; }
 
   .contact-page { padding: 5rem 1.5rem 3rem; }
   .contact-row-name { font-size: clamp(1.6rem, 7vw, 2.5rem); }

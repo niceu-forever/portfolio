@@ -307,10 +307,13 @@
 
       <div class="work-grid">
 
-        <div class="work-card">
+        <!-- Row 1: landscape images side by side -->
+        <div class="work-card is-landscape"
+          data-images='["images/preikestolen.png","images/mountainsgrass.png","images/fence.png"]'>
           <div class="work-card-image">
             <img src="images/fence.png" alt="RAVN Esport jersey mockup" loading="lazy" />
             <div class="work-card-hover-label"><span>VIEW PROJECT</span></div>
+            <div class="work-card-count">1 / 3</div>
           </div>
           <div class="work-card-info">
             <div class="work-card-title">JERSEY DESIGN</div>
@@ -318,18 +321,7 @@
           </div>
         </div>
 
-        <div class="work-card">
-          <div class="work-card-image">
-            <img src="images/natureposter.jpg" alt="Nature poster" loading="lazy" />
-            <div class="work-card-hover-label"><span>VIEW PROJECT</span></div>
-          </div>
-          <div class="work-card-info">
-            <div class="work-card-title">NATURE POSTER</div>
-            <div class="work-card-meta">PRINT<br />2026</div>
-          </div>
-        </div>
-
-        <div class="work-card">
+        <div class="work-card is-landscape">
           <div class="work-card-image">
             <img src="images/ravn.png" alt="RAVN Esport web design" loading="lazy" />
             <div class="work-card-hover-label"><span>VIEW PROJECT</span></div>
@@ -340,7 +332,19 @@
           </div>
         </div>
 
-        <div class="work-card">
+        <!-- Row 2: portrait images side by side -->
+        <div class="work-card is-portrait">
+          <div class="work-card-image">
+            <img src="images/natureposter.jpg" alt="Nature poster" loading="lazy" />
+            <div class="work-card-hover-label"><span>VIEW PROJECT</span></div>
+          </div>
+          <div class="work-card-info">
+            <div class="work-card-title">NATURE POSTER</div>
+            <div class="work-card-meta">PRINT<br />2026</div>
+          </div>
+        </div>
+
+        <div class="work-card is-portrait">
           <div class="work-card-image">
             <img src="images/porsche.png" alt="Porsche poster" loading="lazy" />
             <div class="work-card-hover-label"><span>VIEW PROJECT</span></div>
