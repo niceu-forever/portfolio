@@ -22,14 +22,16 @@ window.addEventListener('popstate', () => showPage(location.hash.replace('#','')
 showPage(location.hash.replace('#','') || 'home');
 
 
-// ---- HORIZONTAL SCROLL — SNAP, ONE ITEM AT A TIME ----
+// ---- HORIZONTAL SCROLL ----
 /*
   HOW TO ADD IMAGES TO THE SCROLLER:
-  In index.html find id="hscroll-track".
+  Find id="hscroll-track" in index.html.
   Copy one .hscroll-item block, paste inside, swap img src + caption.
-  JS adapts automatically — no code changes needed.
+  JS adapts automatically.
 */
 let hscrollCleanup = null;
+
+function isMobile() { return window.innerWidth <= 768; }
 
 function initHScroll() {
   if (hscrollCleanup) { hscrollCleanup(); hscrollCleanup = null; }
@@ -46,21 +48,17 @@ function initHScroll() {
 
   let current = 0;
 
-  // Items have auto width based on image — wait for images to load for correct sizing
-  function getItemOffset(idx) {
-    // Sum up widths + gaps of all items before idx, then offset to center active item
+  function getOffset(idx) {
+    if (isMobile()) {
+      // On mobile each item is 100vw — simple multiplication
+      return -(idx * window.innerWidth);
+    }
+    // Desktop: center the active item
     const gap = 64;
-    const vpW = window.innerWidth;
-    let offset = vpW / 2;
-
-    // Subtract half the active item width to center it
-    offset -= items[idx].offsetWidth / 2;
-
-    // Subtract widths + gaps of all items before idx
+    let offset = window.innerWidth / 2 - items[idx].offsetWidth / 2;
     for (let i = 0; i < idx; i++) {
       offset -= items[i].offsetWidth + gap;
     }
-
     return offset;
   }
 
@@ -88,7 +86,7 @@ function initHScroll() {
   function goTo(idx) {
     current = Math.max(0, Math.min(idx, items.length - 1));
     updateClasses(current);
-    track.style.transform = `translateX(${getItemOffset(current)}px)`;
+    track.style.transform = `translateX(${getOffset(current)}px)`;
 
     if (counter) counter.textContent =
       `${String(current+1).padStart(2,'0')} / ${String(items.length).padStart(2,'0')}`;
@@ -112,11 +110,10 @@ function initHScroll() {
 
   window.addEventListener('scroll', onScroll, { passive: true });
 
-  // Wait for images so offsetWidth is accurate
+  // Wait for images to load so offsetWidth is accurate on desktop
   const imgPromises = items.map(item => {
     const img = item.querySelector('img');
-    if (!img) return Promise.resolve();
-    if (img.complete) return Promise.resolve();
+    if (!img || img.complete) return Promise.resolve();
     return new Promise(res => { img.onload = res; img.onerror = res; });
   });
   Promise.all(imgPromises).then(() => goTo(0));
@@ -126,6 +123,49 @@ function initHScroll() {
 
 window.addEventListener('load', () => {
   if (document.getElementById('page-home').classList.contains('active')) initHScroll();
+});
+
+// Re-init on resize since mobile/desktop offset logic differs
+window.addEventListener('resize', () => {
+  if (document.getElementById('page-home').classList.contains('active')) {
+    setTimeout(initHScroll, 100);
+  }
+});
+
+
+// ---- LIGHTBOX ----
+const lightbox    = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightbox-img');
+
+function openLightbox(src) {
+  lightboxImg.src = src;
+  lightbox.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+  lightbox.classList.remove('open');
+  document.body.style.overflow = '';
+  // Clear src after transition so there's no flash
+  setTimeout(() => { lightboxImg.src = ''; }, 300);
+}
+
+document.getElementById('lightbox-close')?.addEventListener('click', closeLightbox);
+
+lightbox?.addEventListener('click', e => {
+  if (e.target === lightbox) closeLightbox();
+});
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeLightbox();
+});
+
+// Wire up work cards
+document.querySelectorAll('.work-card').forEach(card => {
+  card.addEventListener('click', () => {
+    const img = card.querySelector('.work-card-image img');
+    if (img) openLightbox(img.src);
+  });
 });
 
 
@@ -143,6 +183,7 @@ window.addEventListener('load', () => {
     lastY = y;
   }, { passive: true });
 })();
+
 
 // ---- EASTER EGG ----
 document.getElementById('easter-trigger')?.addEventListener('click', () => showPage('easter'));

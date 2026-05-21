@@ -46,9 +46,7 @@
           <div>
             <p class="hero-eyebrow">Portfolio ✦ Vol. I</p>
             <h1 class="hero-title">
-              MAKING<br />
-              <span class="script-word">things</span><br />
-              LOOK GOOD.
+              MAKING <span class="script-word">things</span> LOOK GOOD.
             </h1>
             <p class="hero-desc">
               Branding, motion, web and print design that doesn't look like
@@ -278,10 +276,11 @@
 
       <div class="work-grid">
 
-        <div class="work-card">
+        <div class="work-card" data-images='["images/fence.png","images/preikestolen.png"]'>
           <div class="work-card-image">
             <img src="images/fence.png" alt="RAVN Esport jersey mockup" loading="lazy" />
             <div class="work-card-hover-label"><span>VIEW PROJECT</span></div>
+            <div class="work-card-count">1 / 2</div>
           </div>
           <div class="work-card-info">
             <div class="work-card-title">JERSEY MOCKUP</div>
@@ -322,16 +321,7 @@
           </div>
         </div>
 
-        <div class="work-card">
-          <div class="work-card-image">
-            <img src="images/preikestolen.png" alt="Preikestolen jersey mockup" loading="lazy" />
-            <div class="work-card-hover-label"><span>VIEW PROJECT</span></div>
-          </div>
-          <div class="work-card-info">
-            <div class="work-card-title">PREIKESTOLEN</div>
-            <div class="work-card-meta">JERSEY MOCKUP<br />2026</div>
-          </div>
-        </div>
+
 
       </div>
     </main>
@@ -438,6 +428,15 @@
     </main>
   </div>
 
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" id="lightbox-close">✕ CLOSE</button>
+    <button class="lightbox-prev" id="lightbox-prev">←</button>
+    <img class="lightbox-img" id="lightbox-img" src="" alt="" />
+    <button class="lightbox-next" id="lightbox-next">→</button>
+    <div class="lightbox-counter" id="lightbox-counter"></div>
+  </div>
 
   <script src="assets/js/main.js"></script>
 </body>
