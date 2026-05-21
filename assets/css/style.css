@@ -64,18 +64,21 @@ img { display: block; max-width: 100%; }
 }
 
 .nav-logo {
-  font-family: var(--font-display);
-  font-weight: 900;
-  font-size: 1.4rem; letter-spacing: 0.06em;
-  color: var(--cream);
+  font-family: var(--font-script);
+  font-size: 1.8rem; letter-spacing: 0.02em;
+  color: var(--pink);
+  text-shadow: 0 0 12px rgba(46,23,96,0.8), 0 0 30px rgba(46,23,96,0.4);
   display: flex; align-items: center; gap: 0.8rem;
+  line-height: 1;
 }
 
 .nav-logo-tag {
   font-family: var(--font-mono); font-size: 0.48rem;
   letter-spacing: 0.15em; text-transform: uppercase;
-  color: var(--cream); border: 1px solid rgba(245,237,224,0.4);
+  color: var(--pink); border: 1px solid var(--pink);
   padding: 2px 7px; line-height: 1.4;
+  text-shadow: 0 0 8px rgba(46,23,96,0.9);
+  box-shadow: 0 0 8px rgba(46,23,96,0.4);
 }
 
 .nav-links { display: flex; list-style: none; height: 100%; }

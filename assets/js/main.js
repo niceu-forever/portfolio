@@ -23,12 +23,6 @@ showPage(location.hash.replace('#','') || 'home');
 
 
 // ---- HORIZONTAL SCROLL ----
-/*
-  HOW TO ADD IMAGES TO THE SCROLLER:
-  Find id="hscroll-track" in index.html.
-  Copy one .hscroll-item block, paste inside, swap img src + caption.
-  JS adapts automatically.
-*/
 let hscrollCleanup = null;
 
 function isMobile() { return window.innerWidth <= 768; }
@@ -36,33 +30,26 @@ function isMobile() { return window.innerWidth <= 768; }
 function initHScroll() {
   if (hscrollCleanup) { hscrollCleanup(); hscrollCleanup = null; }
 
-  const section  = document.querySelector('.hscroll-section');
-  const track    = document.querySelector('.hscroll-track');
-  const counter  = document.querySelector('.hscroll-counter');
-  const dots     = document.querySelector('.hscroll-dots');
-  const items    = track ? [...track.querySelectorAll('.hscroll-item')] : [];
-  const prevBtn  = document.querySelector('.hscroll-prev');
-  const nextBtn  = document.querySelector('.hscroll-next');
+  const section = document.querySelector('.hscroll-section');
+  const track   = document.querySelector('.hscroll-track');
+  const counter = document.querySelector('.hscroll-counter');
+  const dots    = document.querySelector('.hscroll-dots');
+  const items   = track ? [...track.querySelectorAll('.hscroll-item')] : [];
+  const prevBtn = document.querySelector('.hscroll-prev');
+  const nextBtn = document.querySelector('.hscroll-next');
 
   if (!section || !track || items.length === 0) return;
 
   let current = 0;
 
   function getOffset(idx) {
-    if (isMobile()) {
-      // On mobile each item is 100vw — simple multiplication
-      return -(idx * window.innerWidth);
-    }
-    // Desktop: center the active item
+    if (isMobile()) return -(idx * window.innerWidth);
     const gap = 64;
     let offset = window.innerWidth / 2 - items[idx].offsetWidth / 2;
-    for (let i = 0; i < idx; i++) {
-      offset -= items[i].offsetWidth + gap;
-    }
+    for (let i = 0; i < idx; i++) offset -= items[i].offsetWidth + gap;
     return offset;
   }
 
-  // Build dots
   if (dots) {
     dots.innerHTML = items.map((_, i) =>
       `<div class="hscroll-dot${i===0?' active':''}"></div>`).join('');
@@ -75,11 +62,11 @@ function initHScroll() {
   function updateClasses(idx) {
     items.forEach((item, i) => {
       item.classList.remove('is-active','is-prev','is-next','is-far');
-      const diff = i - idx;
-      if      (diff === 0)  item.classList.add('is-active');
-      else if (diff === -1) item.classList.add('is-prev');
-      else if (diff === 1)  item.classList.add('is-next');
-      else                  item.classList.add('is-far');
+      const d = i - idx;
+      if      (d === 0)  item.classList.add('is-active');
+      else if (d === -1) item.classList.add('is-prev');
+      else if (d === 1)  item.classList.add('is-next');
+      else               item.classList.add('is-far');
     });
   }
 
@@ -87,21 +74,17 @@ function initHScroll() {
     current = Math.max(0, Math.min(idx, items.length - 1));
     updateClasses(current);
     track.style.transform = `translateX(${getOffset(current)}px)`;
-
     if (counter) counter.textContent =
       `${String(current+1).padStart(2,'0')} / ${String(items.length).padStart(2,'0')}`;
-
-    if (dots) {
-      [...dots.querySelectorAll('.hscroll-dot')].forEach((d,i) =>
-        d.classList.toggle('active', i === current));
-    }
+    if (dots) [...dots.querySelectorAll('.hscroll-dot')]
+      .forEach((d,i) => d.classList.toggle('active', i === current));
   }
 
   function onScroll() {
-    const rect       = section.getBoundingClientRect();
-    const sectionTop = -rect.top;
-    if (sectionTop < 0 || sectionTop > totalScroll - window.innerHeight) return;
-    const idx = Math.min(Math.floor(sectionTop / scrollPerItem), items.length - 1);
+    const rect = section.getBoundingClientRect();
+    const top  = -rect.top;
+    if (top < 0 || top > totalScroll - window.innerHeight) return;
+    const idx = Math.min(Math.floor(top / scrollPerItem), items.length - 1);
     if (idx !== current) goTo(idx);
   }
 
@@ -110,7 +93,6 @@ function initHScroll() {
 
   window.addEventListener('scroll', onScroll, { passive: true });
 
-  // Wait for images to load so offsetWidth is accurate on desktop
   const imgPromises = items.map(item => {
     const img = item.querySelector('img');
     if (!img || img.complete) return Promise.resolve();
@@ -125,20 +107,36 @@ window.addEventListener('load', () => {
   if (document.getElementById('page-home').classList.contains('active')) initHScroll();
 });
 
-// Re-init on resize since mobile/desktop offset logic differs
 window.addEventListener('resize', () => {
-  if (document.getElementById('page-home').classList.contains('active')) {
+  if (document.getElementById('page-home').classList.contains('active'))
     setTimeout(initHScroll, 100);
-  }
 });
 
 
 // ---- LIGHTBOX ----
-const lightbox    = document.getElementById('lightbox');
-const lightboxImg = document.getElementById('lightbox-img');
+const lightbox        = document.getElementById('lightbox');
+const lightboxImg     = document.getElementById('lightbox-img');
+const lightboxPrev    = document.getElementById('lightbox-prev');
+const lightboxNext    = document.getElementById('lightbox-next');
+const lightboxCounter = document.getElementById('lightbox-counter');
 
-function openLightbox(src) {
-  lightboxImg.src = src;
+let lbImages = [];
+let lbIndex  = 0;
+
+function updateLightbox() {
+  lightboxImg.src = lbImages[lbIndex];
+  if (lightboxCounter) {
+    lightboxCounter.textContent = lbImages.length > 1
+      ? `${lbIndex + 1} / ${lbImages.length}` : '';
+  }
+  if (lightboxPrev) lightboxPrev.classList.toggle('hidden', lbImages.length <= 1);
+  if (lightboxNext) lightboxNext.classList.toggle('hidden', lbImages.length <= 1);
+}
+
+function openLightbox(images, startIndex = 0) {
+  lbImages = Array.isArray(images) ? images : [images];
+  lbIndex  = startIndex;
+  updateLightbox();
   lightbox.classList.add('open');
   document.body.style.overflow = 'hidden';
 }
@@ -146,25 +144,41 @@ function openLightbox(src) {
 function closeLightbox() {
   lightbox.classList.remove('open');
   document.body.style.overflow = '';
-  // Clear src after transition so there's no flash
-  setTimeout(() => { lightboxImg.src = ''; }, 300);
+  setTimeout(() => { lightboxImg.src = ''; lbImages = []; }, 300);
 }
 
-document.getElementById('lightbox-close')?.addEventListener('click', closeLightbox);
-
-lightbox?.addEventListener('click', e => {
-  if (e.target === lightbox) closeLightbox();
+lightboxPrev?.addEventListener('click', e => {
+  e.stopPropagation();
+  lbIndex = (lbIndex - 1 + lbImages.length) % lbImages.length;
+  updateLightbox();
 });
+
+lightboxNext?.addEventListener('click', e => {
+  e.stopPropagation();
+  lbIndex = (lbIndex + 1) % lbImages.length;
+  updateLightbox();
+});
+
+document.getElementById('lightbox-close')?.addEventListener('click', closeLightbox);
+lightbox?.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
 
 document.addEventListener('keydown', e => {
+  if (!lightbox?.classList.contains('open')) return;
   if (e.key === 'Escape') closeLightbox();
+  if (e.key === 'ArrowLeft')  { lbIndex = (lbIndex - 1 + lbImages.length) % lbImages.length; updateLightbox(); }
+  if (e.key === 'ArrowRight') { lbIndex = (lbIndex + 1) % lbImages.length; updateLightbox(); }
 });
 
-// Wire up work cards
+// Wire up work cards — reads data-images if present, else single image
 document.querySelectorAll('.work-card').forEach(card => {
   card.addEventListener('click', () => {
-    const img = card.querySelector('.work-card-image img');
-    if (img) openLightbox(img.src);
+    const raw = card.dataset.images;
+    if (raw) {
+      try { openLightbox(JSON.parse(raw), 0); } catch(e) {}
+    } else {
+      const img = card.querySelector('.work-card-image img');
+      if (img) openLightbox([img.src], 0);
+    }
   });
 });
 
@@ -175,11 +189,7 @@ document.querySelectorAll('.work-card').forEach(card => {
   let lastY = 0;
   window.addEventListener('scroll', () => {
     const y = window.scrollY;
-    if (y > lastY && y > 80) {
-      nav.style.transform = 'translateY(-100%)';
-    } else {
-      nav.style.transform = 'translateY(0)';
-    }
+    nav.style.transform = (y > lastY && y > 80) ? 'translateY(-100%)' : 'translateY(0)';
     lastY = y;
   }, { passive: true });
 })();
