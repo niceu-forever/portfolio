@@ -52,54 +52,149 @@ img { display: block; max-width: 100%; }
 .stripe-bar span:nth-child(6) { background: var(--cream); }
 
 /* =========================================
-   NAV
+   TASKBAR (desktop) / NAV (mobile)
    ========================================= */
-.nav {
+
+/* Hide old nav on desktop */
+.nav { display: none; }
+
+/* ---- TASKBAR ---- */
+.taskbar {
+  position: fixed; bottom: 1.5rem; left: 50%;
+  transform: translateX(-50%);
+  z-index: 500;
+  background: rgba(10,10,10,0.82);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(232,232,232,0.1);
+  border-radius: 18px;
+  padding: 0.55rem 0.8rem;
+  display: flex; align-items: center; gap: 0.3rem;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4), 0 0 0 1px rgba(127,102,198,0.15);
+}
+
+.taskbar-item {
+  position: relative;
+  width: 52px; height: 52px;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 3px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.2s cubic-bezier(0.34,1.56,0.64,1);
+  border: none; background: transparent;
+  text-decoration: none;
+}
+
+.taskbar-item:hover {
+  background: rgba(232,232,232,0.08);
+  transform: translateY(-6px) scale(1.12);
+}
+
+.taskbar-item.active {
+  background: rgba(127,102,198,0.15);
+}
+
+.taskbar-item.active::after {
+  content: '';
+  position: absolute; bottom: -8px; left: 50%;
+  transform: translateX(-50%);
+  width: 4px; height: 4px; border-radius: 50%;
+  background: #7f66c6;
+  box-shadow: 0 0 6px #7f66c6;
+}
+
+.taskbar-icon {
+  font-size: 1.4rem; line-height: 1;
+  filter: grayscale(0.3);
+}
+
+.taskbar-label {
+  font-family: var(--font-mono); font-size: 0.42rem;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: rgba(232,232,232,0.45);
+  transition: color 0.15s;
+}
+
+.taskbar-item:hover .taskbar-label,
+.taskbar-item.active .taskbar-label {
+  color: rgba(232,232,232,0.85);
+}
+
+.taskbar-divider {
+  width: 1px; height: 32px;
+  background: rgba(232,232,232,0.1);
+  margin: 0 0.2rem;
+}
+
+/* Taskbar clock */
+.taskbar-clock {
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 0 0.6rem;
+  gap: 2px;
+}
+.taskbar-clock-time {
+  font-family: var(--font-mono); font-size: 0.7rem;
+  color: rgba(232,232,232,0.7); letter-spacing: 0.05em;
+  line-height: 1;
+}
+.taskbar-clock-date {
+  font-family: var(--font-mono); font-size: 0.42rem;
+  color: rgba(232,232,232,0.35); letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Tooltip on hover */
+.taskbar-item::before {
+  content: attr(data-tooltip);
+  position: absolute; bottom: calc(100% + 10px); left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  background: var(--ink); color: var(--cream);
+  font-family: var(--font-mono); font-size: 0.5rem;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  padding: 4px 10px; border-radius: 4px;
+  white-space: nowrap;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.15s, transform 0.15s;
+  border: 1px solid rgba(232,232,232,0.1);
+}
+.taskbar-item:hover::before {
+  opacity: 1; transform: translateX(-50%) translateY(0);
+}
+
+/* Mobile nav — shown only on mobile */
+.nav-mobile {
+  display: none;
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
   background: var(--ink);
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 0 2.5rem; height: 50px;
-  border-bottom: 3px solid var(--cream);
+  align-items: center; justify-content: center;
+  height: 48px;
+  border-bottom: 1px solid rgba(232,232,232,0.1);
   transition: transform 0.3s ease;
 }
 
-.nav-logo {
-  font-family: var(--font-script);
-  font-size: 1.8rem; letter-spacing: 0.02em;
-  color: #7f66c6;
-  text-shadow: 0 0 8px #7f66c6, 0 0 20px #7f66c6, 0 0 40px rgba(127,102,198,0.5);
-  display: flex; align-items: center; gap: 0.8rem;
-  line-height: 1;
+.nav-mobile ul {
+  display: flex; list-style: none; height: 100%; gap: 0;
 }
 
-.nav-logo-tag {
-  font-family: var(--font-mono); font-size: 0.48rem;
-  letter-spacing: 0.15em; text-transform: uppercase;
-  color: #7f66c6; border: 1px solid #7f66c6;
-  padding: 2px 7px; line-height: 1.4;
-  text-shadow: 0 0 6px #7f66c6;
-  box-shadow: 0 0 8px rgba(127,102,198,0.4);
+.nav-mobile a {
+  font-family: var(--font-display); font-weight: 700; font-size: 0.72rem;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: rgba(232,232,232,0.5);
+  height: 48px; display: flex; align-items: center; padding: 0 1.2rem;
+  transition: color 0.15s;
 }
-
-.nav-links { display: flex; list-style: none; height: 100%; }
-.nav-links li { height: 100%; }
-.nav-links a {
-  font-family: var(--font-display); font-weight: 700; font-size: 0.8rem;
-  letter-spacing: 0.12em; color: rgba(232,232,232,0.5);
-  height: 100%; display: flex; align-items: center; padding: 0 1.3rem;
-  border-left: 1px solid rgba(255,255,255,0.05);
-  transition: color 0.15s, background 0.15s;
-}
-.nav-links a:hover { color: var(--cream); background: rgba(255,255,255,0.04); }
-.nav-links a.nav-active {
-  color: var(--cream);
-  border-bottom: 3px solid var(--cream); margin-bottom: -3px;
+.nav-mobile a:hover,
+.nav-mobile a.nav-active { color: var(--cream); }
+.nav-mobile a.nav-active {
+  border-bottom: 2px solid #7f66c6;
 }
 
 /* =========================================
    PAGE ROUTING
    ========================================= */
-.page { display: none; min-height: 100vh; }
+.page { display: none; min-height: 100vh; padding-bottom: 100px; }
 .page.active { display: block; animation: pgIn 0.35s ease; }
 @keyframes pgIn {
   from { opacity: 0; transform: translateY(8px); }
@@ -110,7 +205,7 @@ img { display: block; max-width: 100%; }
    HERO
    ========================================= */
 .hero {
-  min-height: 100vh; padding-top: 50px;
+  min-height: 100vh; padding-top: 0;
   display: flex; flex-direction: column;
 }
 
@@ -896,4 +991,110 @@ img { display: block; max-width: 100%; }
   transform: translateX(-50%);
   font-family: var(--font-mono); font-size: 0.55rem;
   letter-spacing: 0.2em; color: rgba(232,232,232,0.4);
+}
+
+/* =========================================
+   CUSTOM PIXEL CURSOR
+   ========================================= */
+*, *::before, *::after { cursor: none !important; }
+
+.cursor {
+  position: fixed; top: 0; left: 0;
+  pointer-events: none; z-index: 99999;
+  transform: translate(-2px, -2px);
+  image-rendering: pixelated;
+}
+
+/* Pixel arrow cursor drawn with box-shadows */
+.cursor-dot {
+  position: absolute; top: 0; left: 0;
+  width: 4px; height: 4px;
+  background: var(--ink);
+  /* Build pixel art arrow with box-shadow */
+  box-shadow:
+    /* col 0 */
+    0px  0px 0 0 var(--ink),
+    0px  4px 0 0 var(--ink),
+    0px  8px 0 0 var(--ink),
+    0px 12px 0 0 var(--ink),
+    0px 16px 0 0 var(--ink),
+    0px 20px 0 0 var(--ink),
+    0px 24px 0 0 var(--ink),
+    /* col 1 */
+    4px  4px 0 0 var(--ink),
+    4px  8px 0 0 var(--ink),
+    4px 12px 0 0 var(--ink),
+    4px 16px 0 0 var(--ink),
+    4px 20px 0 0 var(--ink),
+    /* col 2 */
+    8px  8px 0 0 var(--ink),
+    8px 12px 0 0 var(--ink),
+    8px 16px 0 0 var(--ink),
+    /* col 3 */
+    12px 12px 0 0 var(--ink),
+    12px 16px 0 0 var(--ink),
+    /* col 4 */
+    16px 16px 0 0 var(--ink),
+    /* white outline for visibility on dark */
+    1px  1px 0 0 var(--cream),
+    1px  5px 0 0 var(--cream),
+    1px  9px 0 0 var(--cream),
+    1px 13px 0 0 var(--cream),
+    1px 17px 0 0 var(--cream),
+    1px 21px 0 0 var(--cream),
+    5px  5px 0 0 var(--cream),
+    5px  9px 0 0 var(--cream),
+    5px 13px 0 0 var(--cream),
+    5px 17px 0 0 var(--cream),
+    9px  9px 0 0 var(--cream),
+    9px 13px 0 0 var(--cream),
+    13px 13px 0 0 var(--cream);
+}
+
+/* =========================================
+   GLITCH PAGE TRANSITION
+   ========================================= */
+.glitch-overlay {
+  position: fixed; inset: 0; z-index: 9000;
+  pointer-events: none;
+  background: var(--ink);
+  opacity: 0;
+}
+
+.glitch-overlay.flash {
+  animation: glitch-flash 0.35s steps(1) forwards;
+}
+
+@keyframes glitch-flash {
+  0%   { opacity: 0; }
+  15%  { opacity: 0.9; background: var(--ink); }
+  25%  { opacity: 0.4; background: #7f66c6; transform: translateX(3px); }
+  35%  { opacity: 0.8; background: var(--ink); transform: translateX(-2px); }
+  50%  { opacity: 0; }
+  65%  { opacity: 0.3; background: var(--ink); }
+  80%  { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+/* =========================================
+   MOBILE OVERRIDES
+   ========================================= */
+@media (max-width: 768px) {
+  /* Hide taskbar, show mobile nav */
+  .taskbar { display: none; }
+  .nav-mobile { display: flex; }
+
+  /* No bottom padding needed for taskbar on mobile */
+  .page { padding-bottom: 0; }
+
+  /* Hero top padding for mobile nav */
+  .hero { padding-top: 48px; }
+  .about-page { padding-top: 5rem; }
+  .work-page  { padding-top: 5rem; }
+  .contact-page { padding-top: 5rem; }
+  .easter-page  { padding-top: 5rem; }
+
+  /* No custom cursor on touch */
+  *, *::before, *::after { cursor: auto !important; }
+  .cursor { display: none; }
 }

@@ -2,17 +2,47 @@
    PORTFOLIO — MAIN JS
    ========================================= */
 
+// ---- CUSTOM PIXEL CURSOR ----
+const cursor = document.getElementById('cursor');
+if (cursor && window.innerWidth > 768) {
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top  = e.clientY + 'px';
+  });
+}
+
+
+// ---- GLITCH PAGE TRANSITION ----
+const glitchOverlay = document.getElementById('glitch-overlay');
+
+function triggerGlitch(cb) {
+  if (!glitchOverlay) { cb(); return; }
+  glitchOverlay.classList.add('flash');
+  setTimeout(cb, 120);
+  setTimeout(() => glitchOverlay.classList.remove('flash'), 400);
+}
+
+
 // ---- PAGE ROUTING ----
 const pages    = document.querySelectorAll('.page');
 const navLinks = document.querySelectorAll('[data-page]');
 
 function showPage(id) {
-  pages.forEach(p => p.classList.remove('active'));
-  const target = document.getElementById(`page-${id}`);
-  if (target) { target.classList.add('active'); window.scrollTo({ top: 0 }); }
-  navLinks.forEach(l => l.classList.toggle('nav-active', l.dataset.page === id));
-  history.pushState(null, null, `#${id}`);
-  if (id === 'home') setTimeout(initHScroll, 80);
+  triggerGlitch(() => {
+    pages.forEach(p => p.classList.remove('active'));
+    const target = document.getElementById(`page-${id}`);
+    if (target) { target.classList.add('active'); window.scrollTo({ top: 0 }); }
+
+    // Update all nav links (taskbar + mobile nav)
+    navLinks.forEach(l => {
+      const isActive = l.dataset.page === id;
+      l.classList.toggle('nav-active', isActive);
+      l.classList.toggle('active', isActive);
+    });
+
+    history.pushState(null, null, `#${id}`);
+    if (id === 'home') setTimeout(initHScroll, 80);
+  });
 }
 
 navLinks.forEach(l => l.addEventListener('click', e => {
@@ -20,6 +50,39 @@ navLinks.forEach(l => l.addEventListener('click', e => {
 }));
 window.addEventListener('popstate', () => showPage(location.hash.replace('#','') || 'home'));
 showPage(location.hash.replace('#','') || 'home');
+
+
+// ---- TASKBAR CLOCK ----
+function updateClock() {
+  const now  = new Date();
+  const time = document.getElementById('taskbar-time');
+  const date = document.getElementById('taskbar-date');
+  if (!time || !date) return;
+
+  const h = String(now.getHours()).padStart(2,'0');
+  const m = String(now.getMinutes()).padStart(2,'0');
+  const s = String(now.getSeconds()).padStart(2,'0');
+  time.textContent = `${h}:${m}:${s}`;
+
+  const days  = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
+  const months= ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+  date.textContent = `${days[now.getDay()]} ${String(now.getDate()).padStart(2,'0')} ${months[now.getMonth()]}`;
+}
+updateClock();
+setInterval(updateClock, 1000);
+
+
+// ---- MOBILE NAV HIDE ON SCROLL ----
+(function() {
+  const nav = document.getElementById('nav-mobile');
+  if (!nav) return;
+  let lastY = 0;
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    nav.style.transform = (y > lastY && y > 60) ? 'translateY(-100%)' : 'translateY(0)';
+    lastY = y;
+  }, { passive: true });
+})();
 
 
 // ---- HORIZONTAL SCROLL ----
@@ -40,7 +103,6 @@ function initHScroll() {
 
   if (!section || !track || items.length === 0) return;
 
-  // On mobile the scroller is vertical — no JS needed
   if (isMobile()) {
     section.style.height = '';
     items.forEach(item => {
@@ -53,7 +115,6 @@ function initHScroll() {
   let current = 0;
 
   function getOffset(idx) {
-    if (isMobile()) return -(idx * window.innerWidth);
     const gap = 64;
     let offset = window.innerWidth / 2 - items[idx].offsetWidth / 2;
     for (let i = 0; i < idx; i++) offset -= items[i].offsetWidth + gap;
@@ -162,7 +223,6 @@ lightboxPrev?.addEventListener('click', e => {
   lbIndex = (lbIndex - 1 + lbImages.length) % lbImages.length;
   updateLightbox();
 });
-
 lightboxNext?.addEventListener('click', e => {
   e.stopPropagation();
   lbIndex = (lbIndex + 1) % lbImages.length;
@@ -179,7 +239,6 @@ document.addEventListener('keydown', e => {
   if (e.key === 'ArrowRight') { lbIndex = (lbIndex + 1) % lbImages.length; updateLightbox(); }
 });
 
-// Wire up work cards — reads data-images if present, else single image
 document.querySelectorAll('.work-card').forEach(card => {
   card.addEventListener('click', () => {
     const raw = card.dataset.images;
@@ -191,18 +250,6 @@ document.querySelectorAll('.work-card').forEach(card => {
     }
   });
 });
-
-
-// ---- NAV HIDE ON SCROLL DOWN ----
-(function() {
-  const nav = document.querySelector('.nav');
-  let lastY = 0;
-  window.addEventListener('scroll', () => {
-    const y = window.scrollY;
-    nav.style.transform = (y > lastY && y > 80) ? 'translateY(-100%)' : 'translateY(0)';
-    lastY = y;
-  }, { passive: true });
-})();
 
 
 // ---- EASTER EGG ----

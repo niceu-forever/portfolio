@@ -12,19 +12,48 @@
 </head>
 <body>
 
-  <!-- NAV -->
-  <nav class="nav">
-    <div class="nav-logo">
-      markus håland
-      <span class="nav-logo-tag">MH-2026</span>
-    </div>
-    <ul class="nav-links">
+  <!-- MOBILE NAV -->
+  <nav class="nav-mobile" id="nav-mobile">
+    <ul>
       <li><a href="#home"    data-page="home">Home</a></li>
       <li><a href="#about"   data-page="about">About</a></li>
       <li><a href="#work"    data-page="work">Work</a></li>
       <li><a href="#contact" data-page="contact">Contact</a></li>
     </ul>
   </nav>
+
+  <!-- TASKBAR -->
+  <div class="taskbar" id="taskbar">
+    <button class="taskbar-item active" data-page="home" data-tooltip="Home">
+      <span class="taskbar-icon">⌂</span>
+      <span class="taskbar-label">Home</span>
+    </button>
+    <button class="taskbar-item" data-page="about" data-tooltip="About me">
+      <span class="taskbar-icon">◉</span>
+      <span class="taskbar-label">About</span>
+    </button>
+    <button class="taskbar-item" data-page="work" data-tooltip="Selected work">
+      <span class="taskbar-icon">▦</span>
+      <span class="taskbar-label">Work</span>
+    </button>
+    <button class="taskbar-item" data-page="contact" data-tooltip="Get in touch">
+      <span class="taskbar-icon">✉</span>
+      <span class="taskbar-label">Contact</span>
+    </button>
+    <div class="taskbar-divider"></div>
+    <div class="taskbar-clock">
+      <div class="taskbar-clock-time" id="taskbar-time">00:00:00</div>
+      <div class="taskbar-clock-date" id="taskbar-date">MON 01 JAN</div>
+    </div>
+  </div>
+
+  <!-- GLITCH OVERLAY -->
+  <div class="glitch-overlay" id="glitch-overlay"></div>
+
+  <!-- CUSTOM CURSOR -->
+  <div class="cursor" id="cursor">
+    <div class="cursor-dot"></div>
+  </div>
 
   <button class="easter-trigger" id="easter-trigger" aria-label="..."></button>
 
@@ -128,6 +157,11 @@
           <div class="hscroll-track" id="hscroll-track">
 
             <div class="hscroll-item">
+              <img src="images/fence.png" alt="RAVN Esport jersey mockup" loading="lazy" />
+              <div class="hscroll-item-caption">JERSEY MOCKUP — 2026</div>
+            </div>
+
+            <div class="hscroll-item">
               <img src="images/natureposter.jpg" alt="Print project" loading="lazy" />
               <div class="hscroll-item-caption">POSTER — 2026</div>
             </div>
@@ -147,15 +181,6 @@
               <div class="hscroll-item-caption">JERSEY MOCKUP - PREIKESTOLEN, NORWAY — 2026</div>
             </div>
 
-            <div class="hscroll-item">
-              <img src="images/mountainsgrass.png" alt="Poster" loading="lazy" />
-              <div class="hscroll-item-caption">JERSEY MOCKUP — 2026</div>
-            </div>
-
-            <div class="hscroll-item">
-              <img src="images/fence.png" alt="RAVN Esport jersey mockup" loading="lazy" />
-              <div class="hscroll-item-caption">JERSEY MOCKUP — 2026</div>
-            </div>
             <!-- ===== ADD MORE ITEMS HERE =====
             <div class="hscroll-item">
               <img src="YOUR_IMAGE.jpg" alt="Project name" loading="lazy" />
@@ -281,11 +306,11 @@
 
       <div class="work-grid">
 
-        <div class="work-card" data-images='["images/fence.png","images/preikestolen.png","images/mountainsgrass.png"]'>
+        <div class="work-card" data-images='["images/fence.png","images/preikestolen.png"]'>
           <div class="work-card-image">
             <img src="images/fence.png" alt="RAVN Esport jersey mockup" loading="lazy" />
             <div class="work-card-hover-label"><span>VIEW PROJECT</span></div>
-            <div class="work-card-count">1 / 3</div>
+            <div class="work-card-count">1 / 2</div>
           </div>
           <div class="work-card-info">
             <div class="work-card-title">JERSEY DESIGN</div>
