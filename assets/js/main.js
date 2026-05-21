@@ -226,9 +226,13 @@ document.addEventListener('keydown', e => {
   if (e.key === 'ArrowRight') { lbIndex = (lbIndex+1)%lbImages.length; updateLightbox(); }
 });
 
-// Work cards open lightbox
+// Work cards — open link in new tab if data-link, otherwise lightbox
 document.querySelectorAll('.work-card').forEach(card => {
   card.addEventListener('click', () => {
+    if (card.dataset.link) {
+      window.open(card.dataset.link, '_blank', 'noopener');
+      return;
+    }
     const raw = card.dataset.images;
     if (raw) {
       try { openLightbox(JSON.parse(raw), 0); } catch(e) {}
