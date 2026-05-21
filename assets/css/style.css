@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Monsieur+La+Doulaise&family=Public+Sans:ital,wght@0,300;0,400;0,600;0,700;0,900;1,300;1,400&family=Space+Mono:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Monsieur+La+Doulaise&family=Public+Sans:ital,wght@0,300;0,400;0,600;0,700;0,900;1,300;1,400&family=Space+Mono:wght@400;700&display=swap');
 
 /* =========================================
    VARIABLES
@@ -7,7 +7,7 @@
   --cream:   #F5EDE0;
   --ink:     #0A0A0A;
   --pink:    #E8177A;
-  --font-display: 'Bebas Neue', sans-serif;
+  --font-display: 'Public Sans', sans-serif;
   --font-script:  'Monsieur La Doulaise', cursive;
   --font-body:    'Public Sans', sans-serif;
   --font-mono:    'Space Mono', monospace;
@@ -65,7 +65,8 @@ img { display: block; max-width: 100%; }
 
 .nav-logo {
   font-family: var(--font-display);
-  font-size: 1.4rem; letter-spacing: 0.12em;
+  font-weight: 900;
+  font-size: 1.4rem; letter-spacing: 0.06em;
   color: var(--cream);
   display: flex; align-items: center; gap: 0.8rem;
 }
@@ -80,8 +81,8 @@ img { display: block; max-width: 100%; }
 .nav-links { display: flex; list-style: none; height: 100%; }
 .nav-links li { height: 100%; }
 .nav-links a {
-  font-family: var(--font-display); font-size: 1rem;
-  letter-spacing: 0.15em; color: rgba(245,237,224,0.5);
+  font-family: var(--font-display); font-weight: 700; font-size: 0.8rem;
+  letter-spacing: 0.12em; color: rgba(245,237,224,0.5);
   height: 100%; display: flex; align-items: center; padding: 0 1.3rem;
   border-left: 1px solid rgba(255,255,255,0.05);
   transition: color 0.15s, background 0.15s;
@@ -143,8 +144,9 @@ img { display: block; max-width: 100%; }
 
 .hero-title {
   font-family: var(--font-display);
+  font-weight: 900;
   font-size: clamp(5rem, 9.5vw, 8.5rem);
-  line-height: 0.93; letter-spacing: 0.01em;
+  line-height: 0.93; letter-spacing: -0.01em;
   color: var(--ink);
 }
 
@@ -155,7 +157,9 @@ img { display: block; max-width: 100%; }
   -webkit-text-stroke: 1.5px var(--pink);
   color: transparent;
   display: block;
-  line-height: 1.05;
+  line-height: 0.7;
+  margin-top: -0.1em;
+  margin-bottom: -0.05em;
   letter-spacing: 0.01em;
 }
 
@@ -264,7 +268,8 @@ img { display: block; max-width: 100%; }
 }
 .hscroll-title {
   font-family: var(--font-display);
-  font-size: 2rem; letter-spacing: 0.1em; color: var(--cream);
+  font-weight: 900;
+  font-size: 2rem; letter-spacing: 0.05em; color: var(--cream);
 }
 .hscroll-counter {
   font-family: var(--font-mono); font-size: 0.6rem;
@@ -403,8 +408,9 @@ img { display: block; max-width: 100%; }
 }
 .intro-text h2 {
   font-family: var(--font-display);
+  font-weight: 900;
   font-size: clamp(2.8rem, 5.5vw, 5rem);
-  line-height: 0.95; letter-spacing: 0.02em; margin-bottom: 1.5rem;
+  line-height: 0.95; letter-spacing: -0.01em; margin-bottom: 1.5rem;
 }
 .intro-text h2 em {
   font-family: var(--font-script);
@@ -445,8 +451,9 @@ img { display: block; max-width: 100%; }
 }
 .page-header h1 {
   font-family: var(--font-display);
+  font-weight: 900;
   font-size: clamp(4rem, 9vw, 8rem);
-  line-height: 0.9; letter-spacing: 0.02em;
+  line-height: 0.9; letter-spacing: -0.01em;
 }
 .page-header h1 .script-word {
   font-family: var(--font-script);
@@ -553,8 +560,8 @@ img { display: block; max-width: 100%; }
   display: flex; justify-content: space-between; align-items: baseline;
 }
 .work-card-title {
-  font-family: var(--font-display); font-size: 1.25rem;
-  letter-spacing: 0.05em;
+  font-family: var(--font-display); font-weight: 900; font-size: 1.1rem;
+  letter-spacing: 0.02em;
 }
 .work-card-meta {
   font-family: var(--font-mono); font-size: 0.52rem;
@@ -581,8 +588,8 @@ img { display: block; max-width: 100%; }
 .contact-row:hover { padding-left: 1rem; }
 .contact-row-left { display: flex; align-items: baseline; gap: 1.5rem; }
 .contact-row-name {
-  font-family: var(--font-display); font-size: clamp(2rem, 5vw, 3.5rem);
-  letter-spacing: 0.04em; line-height: 1; transition: color 0.2s;
+  font-family: var(--font-display); font-weight: 900; font-size: clamp(2rem, 5vw, 3.5rem);
+  letter-spacing: -0.01em; line-height: 1; transition: color 0.2s;
 }
 .contact-row:hover .contact-row-name { color: var(--pink); }
 .contact-row-type {
@@ -675,7 +682,7 @@ img { display: block; max-width: 100%; }
   display: flex; justify-content: space-between;
   align-items: center; flex-wrap: wrap; gap: 1rem;
 }
-.footer-name { font-family: var(--font-display); font-size: 1.3rem; letter-spacing: 0.1em; }
+.footer-name { font-family: var(--font-display); font-weight: 900; font-size: 1.3rem; letter-spacing: 0.04em; }
 .footer-copy { font-family: var(--font-mono); font-size: 0.52rem; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.3; }
 .footer-links { display: flex; gap: 2rem; }
 .footer-links a { font-family: var(--font-mono); font-size: 0.52rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(245,237,224,0.35); transition: color 0.2s; }
