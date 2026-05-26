@@ -35,14 +35,8 @@ img { display: block; max-width: 100%; }
 /* =========================================
    STRIPE BAR
    ========================================= */
-.stripe-bar { display: flex; height: 6px; width: 100%; }
-.stripe-bar span { flex: 1; }
-.stripe-bar span:nth-child(1) { background: var(--pink); }
-.stripe-bar span:nth-child(2) { background: var(--cream); }
-.stripe-bar span:nth-child(3) { background: var(--pink); }
-.stripe-bar span:nth-child(4) { background: var(--cream); }
-.stripe-bar span:nth-child(5) { background: var(--pink); }
-.stripe-bar span:nth-child(6) { background: var(--cream); }
+.stripe-bar { display: flex; height: 6px; width: 100%; background: var(--pink); }
+.stripe-bar span { display: none; }
 
 /* =========================================
    TASKBAR / MOBILE NAV
@@ -541,12 +535,6 @@ img { display: block; max-width: 100%; }
   gap: 1rem;
   align-items: start;
 }
-
-/* Landscape cards sit side by side — row 1 */
-.work-card.is-landscape { }
-
-/* Portrait cards sit side by side — row 2 */
-.work-card.is-portrait { }
 
 .work-card {
   position: relative; cursor: pointer;
