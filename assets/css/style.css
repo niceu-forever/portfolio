@@ -341,7 +341,8 @@ img { display: block; max-width: 100%; }
 .hscroll-item {
   flex-shrink: 0;
   position: relative;
-  /* 3D tilt — overridden per-state below */
+  display: flex;
+  flex-direction: column;
   transform-style: preserve-3d;
   transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1),
               opacity  0.65s cubic-bezier(0.16, 1, 0.3, 1),
@@ -384,17 +385,25 @@ img { display: block; max-width: 100%; }
   height: min(560px, 64vh);
   width: auto;
   max-width: min(780px, 78vw);
-  object-fit: contain;
+  object-fit: cover;
   background: transparent;
   transition: transform 0.5s ease;
+  flex-shrink: 0;
 }
 .hscroll-item.is-active:hover img { transform: scale(1.02); }
 
-/* Purple accent bar on active */
+/* Purple accent bar on active — sits flush on top of the image */
 .hscroll-item.is-active::before {
   content: '';
   position: absolute; top: 0; left: 0; right: 0; height: 4px;
-  background: var(--pink); z-index: 2;
+  background: var(--pink); z-index: 4;
+  margin: 0;
+}
+
+/* Ensure image sits at very top of item with no gap */
+.hscroll-item img {
+  margin-top: 0;
+  vertical-align: top;
 }
 
 .hscroll-item-caption {
